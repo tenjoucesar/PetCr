@@ -9,19 +9,12 @@ import PetsAdoptedScreen from '../Screens/PetsAdopted';
 import {View, Text} from 'react-native';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
 import HeaderButton from "../components/Buttons";
+import LoginScreen from '../Screens/Login';
 
 enableScreens();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Text>Holaaa</Text>
-    </View>
-  );
-}
 
 const PetsStackScreen = ({navigation}) => (
   <Stack.Navigator>
@@ -78,8 +71,8 @@ const AdoptedStackScreen = () => (
 const TestScreen = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="HomeScreen"
-      component={HomeScreen}
+      name="LoginScreen"
+      component={LoginScreen}
       options={{
         headerTitle: 'Home Screen',
       }}

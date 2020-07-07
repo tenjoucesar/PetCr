@@ -9,7 +9,6 @@ import MyStack from './navigation/index';
 import petsReducer from './Screens/Pets/reducer';
 
 // const sagaMiddleware = createSagaMiddleware();
-debugger;
 const rootReducer = combineReducers({
   pets: petsReducer,
 });
