@@ -8,30 +8,24 @@ function FacebookSignInButton(  ) {
   const onFacebookButtonPress = async () => {
       const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
       if (result.isCancelled) {
-        throw 'User cancelled the login process';
+        throw 'Cancelaste el inicio de sesion';
       }
       const data = await AccessToken.getCurrentAccessToken();
       if (!data) {
-        throw 'Something went wrong obtaining access token';
+        throw 'Algo salio mal obteniendo tus valores de inicio de sesion';
       }
       const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
       return auth().signInWithCredential(facebookCredential);
     }
 
   return (
-    // <Button
-    //   title="Facebook Sign-In"
-    //   onPress={() => onFacebookButtonPress()}
-    //   style={styles.container}
-    // />
-
     <TouchableOpacity
       style={styles.loginScreenButton}
       onPress={() => onFacebookButtonPress()}
       underlayColor='#fff'
     >
-      <Icon name="facebook" size={28} color="white" style={styles.icon} />
-      <Text style={styles.loginText}>Sign in with Facebook</Text>
+      <Icon name="facebook" size={31} color="white" />
+      <Text style={styles.loginText}>Continua con Facebook</Text>
     </TouchableOpacity>
   );
 }
@@ -42,12 +36,13 @@ const styles = StyleSheet.create({
   loginScreenButton: {
     marginVertical: 10,
     paddingTop: 5,
+    paddingLeft: 3,
     backgroundColor:'#3b5998',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#fff',
     width: 190,
-    height: 38,
+    height: 43,
     flexDirection:'row',
     flexWrap:'wrap',
     justifyContent: 'center',
@@ -55,10 +50,8 @@ const styles = StyleSheet.create({
   },
   loginText: {
       color:'#fff',
-      paddingLeft : 10,
+      paddingLeft : 5,
       fontWeight: "700",
       letterSpacing: -0.25,
-  },
-  facebookIcon: {
   }
 });

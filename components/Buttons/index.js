@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { HeaderButton } from "react-navigation-header-buttons";
 import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// Icon.loadfont()
 
 const CustomHeaderCustom = (props) => (
   <HeaderButton

@@ -9,17 +9,15 @@ import { TAB_KEYS } from '../../components/Tabs/constants';
 function PetsScreen({ navigation, pets }) {
   const [activeTab, setActiveTab ] = useState(TAB_KEYS[0]);
 
-  const tabItem = TAB_KEYS.map((tab) => {
-    return (
-      <Tab
-        activeTab={activeTab}
-        name={tab.name}
-        onPress={() => setActiveTab(tab)}
-        key={tab.id}
-        tabKey={tab.tabKey}
-      />
-    );
-  });
+  const tabItem = TAB_KEYS.map((tab) => (
+    <Tab
+      activeTab={activeTab}
+      name={tab.name}
+      onPress={() => setActiveTab(tab)}
+      key={tab.id}
+      tabKey={tab.tabKey}
+    />
+  ));
 
   const renderPetItem = ({item}) => {
     let { img, id } = item;
@@ -28,7 +26,7 @@ function PetsScreen({ navigation, pets }) {
         <PetGrid
           img={img}
           key={id}
-          onSelect={() => navigation.navigate('PetDetailsScreen', {
+          onSelect={() => navigation.navigate('PetDetails', {
             params: { item },
           })}
         />
@@ -39,7 +37,7 @@ function PetsScreen({ navigation, pets }) {
         <PetGrid
           img={img}
           key={id}
-          onSelect={() => navigation.navigate('PetDetailsScreen', {
+          onSelect={() => navigation.navigate('PetDetails', {
             params: { item },
           })}
         />

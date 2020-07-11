@@ -1,34 +1,38 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+
+import { connect } from 'react-redux';
 import AdoptedGrid from "../../components/Grid/AdoptedGrid";
 
-const PetsAdoptedScreen = ({ navigation }) => {
-  const adopted = useSelector((state) => state.pets.adopted);
+const PetsAdoptedScreen = ({ navigation, adoptedPets }) => {
+  const renderPetItem = ({item: {name, protective, breed, img}, item}) => (
+    <AdoptedGrid
+      name={name}
+      protective={protective}
+      breed={breed}
+      img={img}
+      onSelect={() =>
+        navigation.navigate("PetDetails", {
+          params: {
+          item
+          }
+        })
+      }
+    />
+  );
 
   return (
     <FlatList
       style={styles.container}
-      data={adopted}
-      keyExtractor={(item) => item.id}
-      renderItem={(itemData) => (
-        <AdoptedGrid
-          name={itemData.item.name}
-          protective={itemData.item.protective}
-          breed={itemData.item.breed}
-          img={itemData.item.img}
-          onSelect={() =>
-            navigation.navigate("PetDetailsScreen", {
-             params: {
-                item
-              }
-            })
-          }
-        />
-      )}
+      data={adoptedPets}
+      keyExtractor={item => item.id}
+      renderItem={renderPetItem}
     />
   );
 };
+
+const mapStateToProps = (state) => ({ adoptedPets: state.pets.pets.filter(pet => pet.adopted)});
+export default connect(mapStateToProps)(PetsAdoptedScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -36,5 +40,3 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
-
-export default PetsAdoptedScreen;

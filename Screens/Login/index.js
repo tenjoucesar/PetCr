@@ -4,16 +4,12 @@ import auth from '@react-native-firebase/auth';
 import { Button, Image } from 'react-native';
 import GoogleSignInButton from './LogInButtons/GoogleLogIn';
 import FacebookSignInButton from './LogInButtons/FacebookLoginButton';
-import { LoginManager, AccessToken, LoginButton } from 'react-native-fbsdk';
-
 
 function Login() {
-  // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
 
-  // Handle user state changes
   function onAuthStateChanged(user) {
     debugger;
     setUser(user);
@@ -22,7 +18,7 @@ function Login() {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    return subscriber;
   }, []);
 
   const logOff = () => {
@@ -37,7 +33,7 @@ function Login() {
   if (!user) {
     return (
       <View style={styles.container}>
-        <Text>Login</Text>
+        <Text style={styles.title}>Inicia Sesion con alguno de los siguientes metodos</Text>
         <FacebookSignInButton/>
         <GoogleSignInButton />
       </View>
@@ -45,11 +41,11 @@ function Login() {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Welcome {user.email}</Text>
       <Image source={{uri : user.photoURL}} style={{width: 100, height: 100, borderRadius: 50}}/>
       <Button
-      title="logoff"
+      title="Desconectarse"
       onPress={() => logOff()}
       />
     </View>
@@ -60,8 +56,15 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 5,
+    flexDirection: 'column',
+    paddingTop: 150,
+  },
+  title: {
+    fontSize: 20,
+    maxWidth: 320,
+    textAlign: "center",
+    marginBottom: 20,
   }
 })
