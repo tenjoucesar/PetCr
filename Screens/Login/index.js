@@ -1,45 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { Button, Image } from 'react-native';
 import GoogleSignInButton from './LogInButtons/GoogleLogIn';
 import FacebookSignInButton from './LogInButtons/FacebookLoginButton';
-import { connect } from 'react-redux';
-import { loginRequest } from './actions';
+import { AuthContext } from '../../navigation/AuthProvider';
+
 
 function Login() {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-
-
-  function onAuthStateChanged(user) {
-    debugger;
-    if (user) {
-      loginRequest();
-    }
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, []);
-
-  const logOff = () => {
-    debugger;
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-  }
-
-  // const submit = (props) => {
-  //   debugger;
-  //   loginRequest();
-  // }
-
+  const { user, logout, initializing } = useContext(AuthContext);
   if (initializing) return null;
-
   if (!user) {
     return (
       <View style={styles.container}>
@@ -56,19 +26,13 @@ function Login() {
       <Image source={{uri : user.photoURL}} style={{width: 100, height: 100, borderRadius: 50}}/>
       <Button
       title="Desconectarse"
-      onPress={() => logOff()}
+      onPress={() => logout()}
       />
     </View>
   );
 }
-const mapStateToProps = (state) => ({
-  // isLoggedin: state.login.isLoggedin,
-  // userData: state.login.userData,
-  // isImageLoading: state.login.isImageLoading,
-});
 
-export default connect(mapStateToProps, {loginRequest})(Login);
-// export default Login;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

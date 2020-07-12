@@ -1,27 +1,14 @@
-import React from 'react';
-import auth from '@react-native-firebase/auth';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { AuthContext } from '../../../navigation/AuthProvider';
 
 function FacebookSignInButton(  ) {
-  const onFacebookButtonPress = async () => {
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-      if (result.isCancelled) {
-        throw 'Cancelaste el inicio de sesion';
-      }
-      const data = await AccessToken.getCurrentAccessToken();
-      if (!data) {
-        throw 'Algo salio mal obteniendo tus valores de inicio de sesion';
-      }
-      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-      return auth().signInWithCredential(facebookCredential);
-    }
-
+  const { facebookLogin } = useContext(AuthContext);
   return (
     <TouchableOpacity
       style={styles.loginScreenButton}
-      onPress={() => onFacebookButtonPress()}
+      onPress={() => facebookLogin()}
       underlayColor='#fff'
     >
       <Icon name="facebook" size={31} color="white" />
