@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import Pets from '../Screens/Pets/reducer';
+import pets from '../Screens/Pets/reducer';
+import login from '../Screens/Login/reducer';
 
-const rootReducer = combineReducers({
-  Pets,
+export default combineReducers({
+  pets,
+  login,
 });
-export default rootReducer;

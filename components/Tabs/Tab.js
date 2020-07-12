@@ -2,17 +2,15 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { createTabConfig } from './constants';
 
-function Tab({ name, onPress, id, activeTab, tabKey }) {
-  return (
-    <>
-      <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={() => onPress(createTabConfig({ name, id }))}>
-        <View style={[styles.button,  activeTab.tabKey === tabKey ? styles.buttonActive : styles.button] }>
-          <Text style={styles.buttonText}>{name}</Text>
-        </View>
-      </TouchableOpacity>
-      </>
-  );
-};
+const Tab = ({ name, onPress, id, activeTab, tabKey }) => (
+  <>
+    <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={() => onPress(createTabConfig({ name, id }))}>
+      <View style={[styles.button,  activeTab.tabKey === tabKey ? styles.buttonActive : styles.button] }>
+        <Text style={styles.buttonText}>{name}</Text>
+      </View>
+    </TouchableOpacity>
+  </>
+);
 
 export default Tab;
 
