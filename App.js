@@ -6,7 +6,7 @@ import {  createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import MyStack from './navigation/index';
 import IndexReducer from './redux/index-reducer';
-import IndexSagas from './redux/index-sagas';
+// import IndexSagas from './redux/index-sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,14 +15,12 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(IndexSagas);
+// sagaMiddleware.run();
 
 const App =() =>  (
-  <NavigationContainer>
-    <Provider store={store}>
-      <MyStack />
-    </Provider>
-  </NavigationContainer>
+  <Provider store={store}>
+    <MyStack />
+  </Provider>
 );
 
 export default App;
