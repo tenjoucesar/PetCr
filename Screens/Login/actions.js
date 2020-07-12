@@ -1,9 +1,13 @@
 import { LOGIN_REQUESTING, LOGOUT_REQUESTING, LOGIN_SUCCESS } from './constants';
 
 
-export const loginRequest = () => ({
-  type: LOGIN_REQUESTING,
-});
+export const loginRequest = () => {
+  debugger;
+  return {
+
+    type: LOGIN_REQUESTING,
+  }
+};
 
 export const loginRequestSuccessful = function loginRequestSuccessful(userData) {
   debugger;

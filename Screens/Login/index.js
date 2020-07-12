@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 import { Button, Image } from 'react-native';
 import GoogleSignInButton from './LogInButtons/GoogleLogIn';
 import FacebookSignInButton from './LogInButtons/FacebookLoginButton';
+import { connect } from 'react-redux';
+import { loginRequest } from './actions';
 
 function Login() {
   const [initializing, setInitializing] = useState(true);
@@ -12,6 +14,9 @@ function Login() {
 
   function onAuthStateChanged(user) {
     debugger;
+    if (user) {
+      loginRequest();
+    }
     setUser(user);
     if (initializing) setInitializing(false);
   }
@@ -28,13 +33,18 @@ function Login() {
       .then(() => console.log('User signed out!'));
   }
 
+  // const submit = (props) => {
+  //   debugger;
+  //   loginRequest();
+  // }
+
   if (initializing) return null;
 
   if (!user) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Inicia Sesion con alguno de los siguientes metodos</Text>
-        <FacebookSignInButton/>
+        <FacebookSignInButton />
         <GoogleSignInButton />
       </View>
     );
@@ -51,8 +61,14 @@ function Login() {
     </View>
   );
 }
+const mapStateToProps = (state) => ({
+  // isLoggedin: state.login.isLoggedin,
+  // userData: state.login.userData,
+  // isImageLoading: state.login.isImageLoading,
+});
 
-export default Login;
+export default connect(mapStateToProps, {loginRequest})(Login);
+// export default Login;
 
 const styles = StyleSheet.create({
   container: {
