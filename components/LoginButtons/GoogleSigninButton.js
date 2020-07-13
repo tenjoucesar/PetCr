@@ -1,7 +1,6 @@
-
-import React, { useContext } from 'react';
+import React, {useContext} from 'react'
 import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
-import { AuthContext } from '../../../navigation/AuthProvider';
+import { AuthContext } from '../../navigation/AuthProvider';
 
 GoogleSignin.configure({
   webClientId: '',

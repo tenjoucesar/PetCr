@@ -1,15 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import { Button, Image } from 'react-native';
-import GoogleSignInButton from './LogInButtons/GoogleLogIn';
-import FacebookSignInButton from './LogInButtons/FacebookLoginButton';
+import GoogleSignInButton from '../../components/LoginButtons/GoogleSigninButton';
+import FacebookSignInButton from '../../components/LoginButtons/FacebookSigninButton';
 import { AuthContext } from '../../navigation/AuthProvider';
-
+import Loading from '../../components/Loading/Loading';
 
 function Login() {
   const { user, logout, initializing } = useContext(AuthContext);
-  if (initializing) return null;
+  debugger;
+  if (initializing) {
+    return <Loading />;
+  }
+
   if (!user) {
     return (
       <View style={styles.container}>
@@ -23,7 +26,7 @@ function Login() {
   return (
     <View style={styles.container}>
       <Text>Welcome {user.email}</Text>
-      <Image source={{uri : user.photoURL}} style={{width: 100, height: 100, borderRadius: 50}}/>
+      <Image source={{uri : user.photoURL}} style={styles.imageProfile}/>
       <Button
       title="Desconectarse"
       onPress={() => logout()}
@@ -46,5 +49,11 @@ const styles = StyleSheet.create({
     maxWidth: 320,
     textAlign: "center",
     marginBottom: 20,
+  },
+  imageProfile: {
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+    marginVertical: 5,
   }
 })

@@ -14,22 +14,17 @@ const Drawer = createDrawerNavigator();
 
 export default function Routes() {
   const { user, setUser } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-  const [initializing, setInitializing] = useState(true);
-  // Handle user state changes
+  const { initializing, setInitializing } = useContext(AuthContext);
+
   function onAuthStateChanged(user) {
-    // debugger;
     setUser(user);
     if (initializing) setInitializing(false);
-    setLoading(false);
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
-  if (loading) {
-    return <Loading />;
-  }
+
   return (
       <Drawer.Navigator
         initialRouteName='Home'

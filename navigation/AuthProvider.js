@@ -7,13 +7,17 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [initializing, setInitializing] = useState(true);
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
+        initializing,
+        setInitializing,
         facebookLogin: async () => {
           try {
+            setInitializing(true);
             const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
             if (result.isCancelled) {
               throw 'Cancelaste el inicio de sesion';
@@ -23,6 +27,7 @@ export const AuthProvider = ({ children }) => {
               throw 'Algo salio mal obteniendo tus valores de inicio de sesion';
             }
             const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
             return auth().signInWithCredential(facebookCredential);
           } catch (e) {
             console.error(e);
@@ -30,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         },
         googleLogin : async () => {
           try {
+            setInitializing(true);
             const { idToken } = await GoogleSignin.signIn();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             return auth().signInWithCredential(googleCredential);

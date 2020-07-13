@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { AuthContext } from '../../../navigation/AuthProvider';
+import { AuthContext } from '../../navigation/AuthProvider';
 
-function FacebookSignInButton(  ) {
+function FacebookSignInButton() {
   const { facebookLogin } = useContext(AuthContext);
   return (
     <TouchableOpacity
