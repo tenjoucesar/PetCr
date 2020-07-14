@@ -4,10 +4,11 @@ import { Button, Image } from 'react-native';
 import GoogleSignInButton from '../../components/LoginButtons/GoogleSigninButton';
 import FacebookSignInButton from '../../components/LoginButtons/FacebookSigninButton';
 import { AuthContext } from '../../navigation/AuthProvider';
-import Loading from '../../components/Loading/Loading';
+import Loading from '../../components/Loading';
 
 function Login() {
   const { user, logout, initializing } = useContext(AuthContext);
+
   debugger;
   if (initializing) {
     return <Loading />;

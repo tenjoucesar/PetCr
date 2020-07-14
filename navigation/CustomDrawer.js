@@ -8,30 +8,30 @@ function CustomDrawerContent({ navigation, user }) {
   const { logout } = useContext(AuthContext);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}} >
       <DrawerContentScrollView >
         <Text style={styles.title}>Pets CR</Text>
         <View style={styles.divisorLine} />
         {user &&
-          <View style={styles.headerContainer}>
-            <View style={styles.userInfoContainer}>
-              <Image source={{ uri: user.photoURL }} style={styles.imageProfile} />
-              <View style={styles.userDataContainer}>
-                <Text style={styles.userName}>{user.displayName}</Text>
-                <TouchableOpacity >
-                  <Text style={styles.goToAccount}>Ver Cuenta</Text>
-                </TouchableOpacity>
-              </View>
+        <>
+          <View style={styles.userInfoContainer}>
+            <Image source={{ uri: user.photoURL }} style={styles.imageProfile} />
+            <View style={styles.userDataContainer}>
+              <Text style={styles.userName}>{user.displayName}</Text>
+              <TouchableOpacity >
+                <Text style={styles.goToAccount}>Ver Cuenta</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.divisorLine} />
           </View>
+          <View style={styles.divisorLine} />
+        </>
         }
         <DrawerItem
           label='Mascotas'
           icon={() => <Icon name='paw' size={30} color='black' style={styles.icon} />}
           onPress={() => { navigation.navigate('PetsScreen') }}
         />
-        {!user &&
+        {user &&
           <DrawerItem
             label='Acceso'
             icon={() => <Icon name='sign-in' size={30} color='black' style={styles.icon} />}
@@ -43,21 +43,33 @@ function CustomDrawerContent({ navigation, user }) {
           icon={() => <Icon name='check-square-o' size={30} color='black' style={styles.icon} />}
           onPress={() => { navigation.navigate('AdoptedScreen') }}
         />
+
+        <DrawerItem
+          label='Rescatistas'
+          icon={() => <Icon name='home' size={30} color='black' style={styles.icon} />}
+          onPress={() => {}}
+        />
+
         {user &&
-          <DrawerItem
-            label='Perfil'
-            icon={() => <Icon name='user' size={30} color='black' style={styles.icon} />}
-            onPress={() => {}}
-          />
-        }
+        <>
+        <DrawerItem
+          label='Chat'
+          icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
+          onPress={() => {}}
+        />
+        <DrawerItem
+          label='Perfil'
+          icon={() => <Icon name='user' size={30} color='black' style={styles.icon} />}
+          onPress={() => {}}
+        />
         <View style={styles.divisorLine} />
-        {user &&
           <DrawerItem
             label='Desconectarse'
             style={styles.signOut}
-            icon={() => <Icon name='sign-out' size={30} color='black' />}
+            icon={() => <Icon name='sign-out' size={30} style={styles.icon} color='black' />}
             onPress={() => logout()}
           />
+        </>
         }
       </DrawerContentScrollView>
     </View>
@@ -67,12 +79,6 @@ function CustomDrawerContent({ navigation, user }) {
 export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
   userName: {
     fontSize: 14,
     fontWeight: '600',
