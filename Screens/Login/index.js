@@ -9,7 +9,6 @@ import Loading from '../../components/Loading';
 function Login() {
   const { user, logout, initializing } = useContext(AuthContext);
 
-  debugger;
   if (initializing) {
     return <Loading />;
   }

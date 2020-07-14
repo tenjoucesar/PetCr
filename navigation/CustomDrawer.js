@@ -31,13 +31,13 @@ function CustomDrawerContent({ navigation, user }) {
           icon={() => <Icon name='paw' size={30} color='black' style={styles.icon} />}
           onPress={() => { navigation.navigate('PetsScreen') }}
         />
-        {user &&
+        {/* {user && */}
           <DrawerItem
             label='Acceso'
             icon={() => <Icon name='sign-in' size={30} color='black' style={styles.icon} />}
             onPress={() => { navigation.navigate('LoginScreen') }}
           />
-        }
+        {/* } */}
         <DrawerItem
           label='Adoptados'
           icon={() => <Icon name='check-square-o' size={30} color='black' style={styles.icon} />}
@@ -47,7 +47,7 @@ function CustomDrawerContent({ navigation, user }) {
         <DrawerItem
           label='Rescatistas'
           icon={() => <Icon name='home' size={30} color='black' style={styles.icon} />}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('RescuersScreen') }}
         />
 
         {user &&
@@ -55,7 +55,7 @@ function CustomDrawerContent({ navigation, user }) {
         <DrawerItem
           label='Chat'
           icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
-          onPress={() => {}}
+          onPress={() => { navigation.navigate('ChatScreen') }}
         />
         <DrawerItem
           label='Perfil'
