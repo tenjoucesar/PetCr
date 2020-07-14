@@ -1,13 +1,14 @@
+import React, { useState, useContext } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
-
-import React, {useState} from "react";
 import PetGrid from "../../components/Grid/PetGrid";
-import { connect } from 'react-redux';
+import Loading from '../../components/Loading';
+import { PetContext } from '../../navigation/PetsProvider';
 import Tab from  '../../components/Tabs/Tab';
 import { TAB_KEYS } from '../../components/Tabs/constants';
 
-function PetsScreen({ navigation, pets }) {
+function PetsScreen({ navigation }) {
   const [activeTab, setActiveTab ] = useState(TAB_KEYS[0]);
+  const { pets, loading } = useContext(PetContext);
 
   const tabItem = TAB_KEYS.map((tab) => (
     <Tab
@@ -21,6 +22,7 @@ function PetsScreen({ navigation, pets }) {
 
   const renderPetItem = ({item}) => {
     let { img, id } = item;
+
     if (item.specie === activeTab.tabKey) {
       return (
         <PetGrid
@@ -50,14 +52,15 @@ function PetsScreen({ navigation, pets }) {
       <View style={styles.tabContainer}>
         {tabItem}
       </View>
+      { loading &&
+        <Loading />
+      }
       <FlatList data={pets} renderItem={renderPetItem} extraData={activeTab} numColumns={3} />
     </>
   );
 };
 
-const mapStateToProps = (state) => ({ pets: state.pets.pets });
-
-export default connect(mapStateToProps)(PetsScreen);
+export default PetsScreen;
 
 const styles = StyleSheet.create({
   tabContainer: {

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FlatList, StyleSheet } from "react-native";
-
-import { connect } from 'react-redux';
+import { PetContext } from '../../navigation/PetsProvider';
 import AdoptedGrid from "../../components/Grid/AdoptedGrid";
 
-const PetsAdoptedScreen = ({ navigation, adoptedPets }) => {
+const PetsAdoptedScreen = ({ navigation }) => {
+  const { pets } = useContext(PetContext);
+  const adoptedPets = pets.filter(pet => pet.adopted);
+
   const renderPetItem = ({item: {name, protective, breed, img}, item}) => (
     <AdoptedGrid
       name={name}
@@ -31,8 +33,7 @@ const PetsAdoptedScreen = ({ navigation, adoptedPets }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ adoptedPets: state.pets.pets.filter(pet => pet.adopted)});
-export default connect(mapStateToProps)(PetsAdoptedScreen);
+export default PetsAdoptedScreen;
 
 const styles = StyleSheet.create({
   container: {
