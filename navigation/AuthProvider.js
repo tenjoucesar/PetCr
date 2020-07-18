@@ -7,7 +7,12 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 export const AuthContext = createContext({});
 const userDB = firestore().collection('users');
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({children}) => {
+  GoogleSignin.configure({
+    scopes: ['https://www.googleapis.com/auth/drive.photos.readonly'],
+    webClientId: 'oAuth client id',
+    offlineAccess: true,
+  });
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
@@ -62,8 +67,10 @@ export const AuthProvider = ({ children }) => {
         setInitializing,
         facebookLogin: async () => {
           try {
-            setInitializing(true);
-            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+            const result = await LoginManager.logInWithPermissions([
+              'public_profile',
+              'email',
+            ]);
             if (result.isCancelled) {
               throw 'Cancelaste el inicio de sesion';
             }
@@ -71,18 +78,21 @@ export const AuthProvider = ({ children }) => {
             if (!data) {
               throw 'Algo salio mal obteniendo tus valores de inicio de sesion';
             }
-            const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-
+            const facebookCredential = auth.FacebookAuthProvider.credential(
+              data.accessToken,
+            );
             return auth().signInWithCredential(facebookCredential);
           } catch (e) {
             console.error(e);
           }
         },
-        googleLogin : async () => {
+        googleLogin: async () => {
           try {
-            setInitializing(true);
-            const { idToken } = await GoogleSignin.signIn();
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            const {idToken} = await GoogleSignin.signIn();
+            console.log(idToken);
+            const googleCredential = auth.GoogleAuthProvider.credential(
+              idToken,
+            );
             return auth().signInWithCredential(googleCredential);
           } catch (e) {
             console.error(e);
@@ -94,9 +104,8 @@ export const AuthProvider = ({ children }) => {
           } catch (e) {
             console.error(e);
           }
-        }
-      }}
-    >
+        },
+      }}>
       {children}
     </AuthContext.Provider>
   );

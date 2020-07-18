@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "159654830401",
+    "firebase_url": "https://pets-cr-native-app.firebaseio.com",
+    "project_id": "pets-cr-native-app",
+    "storage_bucket": "pets-cr-native-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159654830401:android:84b7cfdab2a8f2420401c0",
+        "android_client_info": {
+          "package_name": "com.petscrappnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159654830401-mi234sbcfs9o57o1c8bb66vrbdgiop93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petscrappnative",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "159654830401-snuots40ikei6fukmma8l58l33jf52rs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj2W-kVCJ8dQN_0RrguWmwJmi_A0DQEkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159654830401-snuots40ikei6fukmma8l58l33jf52rs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "159654830401-g85sadf2bjlj5rbmq7dev9nefpg3hv3u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "petsCr.firebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
