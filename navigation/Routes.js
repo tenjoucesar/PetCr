@@ -1,9 +1,6 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useContext} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import auth from '@react-native-firebase/auth';
 import {AuthContext} from './AuthProvider';
-import Loading from '../components/Loading/Loading';
 import LoginStackScreen from './LoginStack';
 import PetsStackScreen from './PetsStack';
 import AdoptedStackScreen from './AdoptedStack';

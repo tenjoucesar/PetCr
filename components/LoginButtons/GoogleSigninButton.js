@@ -3,7 +3,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
-import {AuthContext} from '../../../navigation/AuthProvider';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 function GoogleSignInButton() {
   const {googleLogin} = useContext(AuthContext);
