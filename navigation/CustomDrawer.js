@@ -1,79 +1,145 @@
-import React, { useContext } from 'react'
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { AuthContext } from '../navigation/AuthProvider';
+import React, {useContext} from 'react';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {AuthContext} from '../navigation/AuthProvider';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function CustomDrawerContent({ navigation, user }) {
-  const { logout } = useContext(AuthContext);
+function CustomDrawerContent({navigation, user}) {
+  const {logout} = useContext(AuthContext);
 
   return (
-    <View style={{flex: 1}} >
-      <DrawerContentScrollView >
+    <View style={{flex: 1}}>
+      <DrawerContentScrollView>
         <Text style={styles.title}>Pets CR</Text>
         <View style={styles.divisorLine} />
-        {user &&
-        <>
-          <View style={styles.userInfoContainer}>
-            <Image source={{ uri: user.photoURL }} style={styles.imageProfile} />
-            <View style={styles.userDataContainer}>
-              <Text style={styles.userName}>{user.displayName}</Text>
-              <TouchableOpacity >
-                <Text style={styles.goToAccount}>Ver Cuenta</Text>
-              </TouchableOpacity>
+        {user && (
+          <>
+            <View style={styles.userInfoContainer}>
+              <Image
+                source={{uri: user.photoURL}}
+                style={styles.imageProfile}
+              />
+              <View style={styles.userDataContainer}>
+                <Text style={styles.userName}>{user.displayName}</Text>
+                <TouchableOpacity>
+                  <Text style={styles.goToAccount}>Ver Cuenta</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <View style={styles.divisorLine} />
-        </>
-        }
+            <View style={styles.divisorLine} />
+          </>
+        )}
         <DrawerItem
-          label='Mascotas'
-          icon={() => <Icon name='paw' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('PetsScreen') }}
+          label="Mascotas"
+          icon={() => (
+            <Icon name="paw" size={30} color="black" style={styles.icon} />
+          )}
+          onPress={() => {
+            navigation.navigate('PetsScreen');
+          }}
         />
         {/* {user && */}
-          <DrawerItem
-            label='Acceso'
-            icon={() => <Icon name='sign-in' size={30} color='black' style={styles.icon} />}
-            onPress={() => { navigation.navigate('LoginScreen') }}
-          />
+        <DrawerItem
+          label="Acceso"
+          icon={() => (
+            <Icon name="sign-in" size={30} color="black" style={styles.icon} />
+          )}
+          onPress={() => {
+            navigation.navigate('LoginScreen');
+          }}
+        />
         {/* } */}
         <DrawerItem
-          label='Adoptados'
-          icon={() => <Icon name='check-square-o' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('AdoptedScreen') }}
+          label="Acceso"
+          icon={() => (
+            <Icon name="sign-in" size={30} color="black" style={styles.icon} />
+          )}
+          onPress={() => {
+            navigation.navigate('LoginScreen');
+          }}
+        />
+        {/* } */}
+        <DrawerItem
+          label="Adoptados"
+          icon={() => (
+            <Icon
+              name="check-square-o"
+              size={30}
+              color="black"
+              style={styles.icon}
+            />
+          )}
+          onPress={() => {
+            navigation.navigate('AdoptedScreen');
+          }}
         />
 
         <DrawerItem
-          label='Rescatistas'
-          icon={() => <Icon name='home' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('RescuersScreen') }}
+          label="Rescatistas"
+          icon={() => (
+            <Icon name="home" size={30} color="black" style={styles.icon} />
+          )}
+          onPress={() => {
+            navigation.navigate('RescuersScreen');
+          }}
         />
 
-        {user &&
-        <>
-        <DrawerItem
-          label='Chat'
-          icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('ChatScreen') }}
-        />
-        <DrawerItem
-          label='Perfil'
-          icon={() => <Icon name='user' size={30} color='black' style={styles.icon} />}
-          onPress={() => {}}
-        />
-        <View style={styles.divisorLine} />
-          <DrawerItem
-            label='Desconectarse'
-            style={styles.signOut}
-            icon={() => <Icon name='sign-out' size={30} style={styles.icon} color='black' />}
-            onPress={() => logout()}
-          />
-        </>
-        }
+        {user && (
+          <>
+            <DrawerItem
+              label="Chat"
+              icon={() => (
+                <Icon
+                  name="comments-o"
+                  size={30}
+                  color="black"
+                  style={styles.icon}
+                />
+              )}
+              onPress={() => {
+                navigation.navigate('ChatScreen');
+              }}
+            />
+            <DrawerItem
+              label="Perfil"
+              icon={() => (
+                <Icon name="user" size={30} color="black" style={styles.icon} />
+              )}
+              onPress={() => {}}
+            />
+            <DrawerItem
+              label="Agregar Mascota"
+              icon={() => (
+                <Icon
+                  name="plus-circle"
+                  size={30}
+                  color="black"
+                  style={styles.icon}
+                />
+              )}
+              onPress={() => {
+                navigation.navigate('NewPet');
+              }}
+            />
+            <View style={styles.divisorLine} />
+            <DrawerItem
+              label="Desconectarse"
+              style={styles.signOut}
+              icon={() => (
+                <Icon
+                  name="sign-out"
+                  size={30}
+                  style={styles.icon}
+                  color="black"
+                />
+              )}
+              onPress={() => logout()}
+            />
+          </>
+        )}
       </DrawerContentScrollView>
     </View>
-  )
+  );
 }
 
 export default CustomDrawerContent;
@@ -111,7 +177,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     marginTop: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   icon: {
     marginRight: -15,
@@ -122,8 +188,8 @@ const styles = StyleSheet.create({
   },
   goToAccount: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 6,
-    color: '#4a148c'
-  }
-})
+    color: '#4a148c',
+  },
+});

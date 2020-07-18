@@ -1,9 +1,10 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import { Item, HeaderButtons } from "react-navigation-header-buttons";
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Item, HeaderButtons} from 'react-navigation-header-buttons';
 import HeaderButton from '../components/Buttons';
 import PetDetailsScreen from '../Screens/PetDetail';
 import PetsAdoptedScreen from '../Screens/PetsAdopted';
+import NewPet from '../Screens/NewPet';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,14 @@ const AdoptedStackScreen = ({navigation}) => (
         headerTitle: 'name',
       }}
     />
+    <Stack.Screen
+      name="NewPet"
+      component={NewPet}
+      options={{
+        headerTitle: 'Agrega una mascota',
+      }}
+    />
   </Stack.Navigator>
-)
+);
 
 export default AdoptedStackScreen;

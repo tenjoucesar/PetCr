@@ -8,24 +8,24 @@ import ProfileStackScreen from './ProfileStack';
 import RescuersStackScreen from './RescuersStack';
 import CustomDrawerContent from './CustomDrawer';
 import ChatStackScreen from './ChatStack';
+import NewPetStack from './NewPetStack';
 
 const Drawer = createDrawerNavigator();
 
 export default function Routes() {
-  const { user } = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
   return (
-      <Drawer.Navigator
-        initialRouteName='Home'
-        drawerContent={(props) => <CustomDrawerContent user={user} {...props} />}
-      >
-          <Drawer.Screen name='PetsScreen' component={PetsStackScreen} />
-          <Drawer.Screen name='LoginScreen' component={LoginStackScreen} />
-          <Drawer.Screen name='AdoptedScreen' component={AdoptedStackScreen} />
-          <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
-          <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
-          <Drawer.Screen name='ChatScreen' component={ChatStackScreen} />
-      </Drawer.Navigator>
-
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={props => <CustomDrawerContent user={user} {...props} />}>
+      <Drawer.Screen name="PetsScreen" component={PetsStackScreen} />
+      <Drawer.Screen name="LoginScreen" component={LoginStackScreen} />
+      <Drawer.Screen name="AdoptedScreen" component={AdoptedStackScreen} />
+      <Drawer.Screen name="Profile" component={ProfileStackScreen} />
+      <Drawer.Screen name="RescuersScreen" component={RescuersStackScreen} />
+      <Drawer.Screen name="ChatScreen" component={ChatStackScreen} />
+      <Drawer.Screen name="NewPet" component={NewPetStack} />
+    </Drawer.Navigator>
   );
 }

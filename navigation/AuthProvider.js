@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {createContext, useState, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { GoogleSignin } from '@react-native-community/google-signin';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import {GoogleSignin} from '@react-native-community/google-signin';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 export const AuthContext = createContext({});
 const userDB = firestore().collection('users');
@@ -37,24 +37,24 @@ export const AuthProvider = ({children}) => {
       emailVerified,
       uid,
       photoURL,
-    })
+    });
     setInitializing(false);
   }
 
   function isNewUser(user) {
     firestore()
-    .collection('users')
-    .where('uid', '==', user.uid)
-    .get()
-    .then(querySnapshot => {
-      const uidStack = [];
-      querySnapshot.forEach(documentSnapshot => {
-        const { uid } = documentSnapshot.data();
-        uidStack.push({uid});
-      });
+      .collection('users')
+      .where('uid', '==', user.uid)
+      .get()
+      .then(querySnapshot => {
+        const uidStack = [];
+        querySnapshot.forEach(documentSnapshot => {
+          const {uid} = documentSnapshot.data();
+          uidStack.push({uid});
+        });
 
-      return uidStack.length >= 1 ? setInitializing(false) : addNewUser(user);
-    });
+        return uidStack.length >= 1 ? setInitializing(false) : addNewUser(user);
+      });
   }
 
   return (
