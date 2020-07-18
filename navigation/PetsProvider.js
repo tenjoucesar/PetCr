@@ -5,16 +5,15 @@ export const PetContext = createContext({});
 
 export const PetsProvider = ({ children }) => {
   const [pets, setPets ] = useState(null);
-  const [pet, setPet ] = useState(null);
   const [loading, setLoading] = useState(true);
-  const ref = firestore().collection('pets');
 
   useEffect(() => {
-    return ref.onSnapshot(querySnapshot => {
-      const list = [];
+    const petsDB = firestore().collection('pets');
+    return petsDB.onSnapshot(querySnapshot => {
+      const petsCollection = [];
       querySnapshot.forEach(doc => {
         const { name, img, gender, description, specie, yearOfBirth, adopted, } = doc.data();
-        list.push({
+        petsCollection.push({
           id: doc.id,
           name,
           img,
@@ -25,7 +24,7 @@ export const PetsProvider = ({ children }) => {
           adopted,
         });
       });
-      setPets(list);
+      setPets(petsCollection);
       if (loading) {
         setLoading(false);
       }
@@ -33,7 +32,7 @@ export const PetsProvider = ({ children }) => {
   }, []);
 
   async function AddNewPet() {
-    await ref.add({
+    await petsDB.add({
       name: 'test',
       adopted: 'test',
     });

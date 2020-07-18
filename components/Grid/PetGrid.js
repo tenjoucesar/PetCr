@@ -1,10 +1,10 @@
-import React from "react";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React from 'react';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-const PetGrid = ({ img, onSelect }) => (
+const PetGrid = ({img, onSelect}) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={onSelect}>
-      <Image source={{ uri: img }} style={styles.bgImage} />
+      <Image source={{uri: img}} style={styles.bgImage} />
     </TouchableOpacity>
   </View>
 );
@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 15,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   bgImage: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
 });
 
