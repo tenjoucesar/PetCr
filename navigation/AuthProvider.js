@@ -49,7 +49,6 @@ export const AuthProvider = ({children}) => {
     .then(querySnapshot => {
       const uidStack = [];
       querySnapshot.forEach(documentSnapshot => {
-        debugger;
         const { uid } = documentSnapshot.data();
         uidStack.push({uid});
       });
@@ -67,6 +66,7 @@ export const AuthProvider = ({children}) => {
         setInitializing,
         facebookLogin: async () => {
           try {
+            setInitializing(true);
             const result = await LoginManager.logInWithPermissions([
               'public_profile',
               'email',
@@ -88,6 +88,7 @@ export const AuthProvider = ({children}) => {
         },
         googleLogin: async () => {
           try {
+            setInitializing(true);
             const {idToken} = await GoogleSignin.signIn();
             console.log(idToken);
             const googleCredential = auth.GoogleAuthProvider.credential(

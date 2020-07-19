@@ -42,5 +42,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "resolutions": { "@react-native-community/cli-debugger-ui": "4.9.0" }
 }

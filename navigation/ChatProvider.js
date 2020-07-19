@@ -2,28 +2,22 @@ import React, { createContext, useState, useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 export const ChatContext = createContext({});
+const chatRef = firestore().collection('rooms').doc('roomA').collection('messages');
 
 export const ChatProvider = ({ children }) => {
   const [chat, setChat ] = useState(null);
-  const [messages, setMessages ] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const chatRef = firestore().collection('rooms').doc('roomA').collection('messages');
     return chatRef.onSnapshot(querySnapshot => {
       const messagesCollection = [];
       querySnapshot.forEach(doc => {
-        debugger;
-        const { from, text, createdAt, } = doc.data();
-        debugger;
-        messagesCollection.push({
-          id: doc.id,
-          from,
-          text,
-          createdAt: new Date(createdAt.seconds * 1000),
-        });
+        let message = doc.data();
+        messagesCollection.push(
+          message
+        );
+
       });
-      debugger;
       setChat(messagesCollection);
       if (loading) {
         setLoading(false);
@@ -31,20 +25,15 @@ export const ChatProvider = ({ children }) => {
     });
   }, []);
 
-  // async function AddNewPet() {
-  //   await petsDB.add({
-  //     name: 'test',
-  //     adopted: 'test',
-  //   });
-  // }
+  async function addNewMessage(message) {
+    await chatRef.add(message);
+  }
   return (
     <ChatContext.Provider
       value={{
         chat,
         setChat,
-        messages,
-        setMessages,
-        // AddNewPet,
+        addNewMessage,
       }}
     >
       {children}

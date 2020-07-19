@@ -1,37 +1,28 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { ChatContext } from '../../navigation/ChatProvider';
+import { AuthContext } from '../../navigation/AuthProvider';
 
 export function ChatScreen() {
-  const [messages, setMessages] = useState([]);
-  const { chat } = useContext(ChatContext);
-  debugger;
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
+  const { chat, addNewMessage } = useContext(ChatContext);
+  const { user } = useContext(AuthContext);
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  const tempUser = user && {
+    _id: user.uid,
+    name: user.displayName,
+    avatar: user.photoURL,
+  };
+
+  const onSend = useCallback((messages) => {
+    const formattedMessage = {...messages[0], createdAt: Date.now() ,sent: true }
+    addNewMessage(formattedMessage)
   }, [])
 
   return (
     <GiftedChat
-      messages={chat}
       onSend={messages => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
+      messages={chat}
+      user={tempUser}
     />
   )
 }

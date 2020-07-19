@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { HeaderButton } from "react-navigation-header-buttons";
-import { Platform } from 'react-native';
+// import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const CustomHeaderCustom = (props) => (
@@ -9,7 +9,8 @@ const CustomHeaderCustom = (props) => (
     {...props}
     IconComponent={Icon}
     iconSize={23}
-    color={Platform.OS === 'ios' ? '#4a148c' : 'purple'}
+    color={'#4a148c'}
+    // color={Platform.OS === 'ios' ? '#4a148c' : 'purple'}
   />
 );
 

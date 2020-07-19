@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Button, Image} from 'react-native';
 import GoogleSignInButton from '../../components/LoginButtons/GoogleSigninButton';
