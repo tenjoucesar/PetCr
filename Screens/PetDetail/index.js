@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { DetailText } from '../../components/Text';
 import { MainButton } from '../../components/Buttons';
+import {AuthContext} from '../../navigation/AuthProvider';
+import {ChatContext} from '../../navigation/ChatProvider';
 
 const PetDetailsScreen = ({ route }) => {
   const petDetailsObj = route.params.params.item;
+  const { generateNewChate, } = useContext(ChatContext);
+  const { user } = useContext(AuthContext);
+
+  const chatWithPetOwner = () => {
+    debugger;
+    const userId = user.uid;
+    debugger
+    generateNewChate(userId);
+  }
   const {
     img,
     name,
@@ -24,7 +35,7 @@ const PetDetailsScreen = ({ route }) => {
             <Text style={styles.breedTitle}>{name}</Text>
             <Text>{breed}</Text>
           </View>
-          <MainButton>Lo quiero</MainButton>
+          <MainButton onPress={() => chatWithPetOwner()}>Lo quiero</MainButton>
         </View>
         <DetailText title="Protectora" text={protective} />
         <DetailText title="Edad" text={age + " Años"} style={styles.details} />

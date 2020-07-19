@@ -8,11 +8,6 @@ export const AuthContext = createContext({});
 const userDB = firestore().collection('users');
 
 export const AuthProvider = ({children}) => {
-  GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/drive.photos.readonly'],
-    webClientId: 'oAuth client id',
-    offlineAccess: true,
-  });
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
@@ -88,8 +83,13 @@ export const AuthProvider = ({children}) => {
         },
         googleLogin: async () => {
           try {
+            debugger;
             setInitializing(true);
+            debugger;
+
             const {idToken} = await GoogleSignin.signIn();
+            debugger;
+
             console.log(idToken);
             const googleCredential = auth.GoogleAuthProvider.credential(
               idToken,
