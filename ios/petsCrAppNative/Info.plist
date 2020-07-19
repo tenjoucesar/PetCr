@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key></key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -23,30 +25,21 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fb605308283518853</string>
 				<string>com.googleusercontent.apps.159654830401-g85sadf2bjlj5rbmq7dev9nefpg3hv3u</string>
 			</array>
 		</dict>
 	</array>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>fb605308283518853</string>
-      <string>com.googleusercontent.apps.159654830401-g85sadf2bjlj5rbmq7dev9nefpg3hv3u</string>
-    </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>605308283518853</string>
-  <key>FacebookDisplayName</key>
-  <string>petsCR</string>
+	<key>FacebookAppID</key>
+	<string>605308283518853</string>
+	<key>FacebookDisplayName</key>
+	<string>petsCR</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>This app requires access to the photo library.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -66,6 +59,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MaterialCommunityIcons.ttf</string>
 		<string>FontAwesome.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
