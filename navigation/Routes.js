@@ -24,7 +24,7 @@ export default function Routes() {
           <Drawer.Screen name='AdoptedScreen' component={AdoptedStackScreen} />
           <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
           <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
-          <Drawer.Screen name='ChatScreen' component={ChatStackScreen} />
+          <Drawer.Screen name='ChatsScreen' component={ChatStackScreen} />
       </Drawer.Navigator>
 
   );

@@ -55,7 +55,7 @@ function CustomDrawerContent({ navigation, user }) {
         <DrawerItem
           label='Chat'
           icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('ChatScreen') }}
+          onPress={() => { navigation.navigate('ChatsScreen') }}
         />
         <DrawerItem
           label='Perfil'

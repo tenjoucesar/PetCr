@@ -2,66 +2,87 @@ import React, { createContext, useState, useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 export const ChatContext = createContext({});
+const chatsRef = firestore().collection('rooms');
 const chatRef = firestore().collection('rooms').doc('roomA').collection("messages")
 
 export const ChatProvider = ({ children }) => {
-  const [chat, setChat] = useState(null);
+  const [chatMessages, setChatMessages] = useState(null);
+  const [chatsCollection, setChatsCollection] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const orDeredChatRef = chatRef.orderBy("createdAt", "desc");
-    return orDeredChatRef.onSnapshot(querySnapshot => {
+  function handleRequestMessages(key) {
+    const newChatRef = firestore().collection('rooms').doc(key).collection('messages');
+    debugger;
+    newChatRef.onSnapshot(querySnapshot => {
       const messagesCollection = [];
+      debugger;
       querySnapshot.forEach(doc => {
+        debugger;
         let message = doc.data();
-        messagesCollection.push(
-          message
-        );
-
+        debugger;
+        messagesCollection.push(message);
       });
-      setChat(messagesCollection);
+      setChatMessages(messagesCollection);
       if (loading) {
         setLoading(false);
       }
     });
+  }
+  useEffect(() => {
+    return handleRequestMessages();
+    // const orDeredChatRef = chatRef.orderBy("createdAt", "desc");
   }, []);
 
-  async function addNewMessage(message) {
-    await chatRef.add(message);
+
+  useEffect(() => {
+    chatsRef.onSnapshot(querySnapshot => {
+      const chatsStack = [];
+      querySnapshot.forEach(doc => {
+        const {chatId} = doc.data();
+        chatsStack.push(chatId)
+      })
+      setChatsCollection(chatsStack);
+    })
+  }, []);
+
+  async function addNewMessage(message, chat) {
+    const newChatRef = firestore().collection('rooms').doc(chat).collection('messages');
+    await newChatRef.add(message);
   }
 
-  function mergeBothIds(petOwnerId, userId) {
-    if (petOwnerId <userId) {
-      return petOwnerId+userId;
+  function mergeBothIds(ownerId, userId) {
+    if (ownerId <userId) {
+      return ownerId+userId;
     } else {
-      return userId+petOwnerId;
+      return userId+ownerId;
     }
   }
 
-  async function generateNewChate(userId) {
-    let petOwnerId = 'vkKdHk5nRmgXogy5u1RZXjnLmFs2';
-    const mergedId = mergeBothIds(petOwnerId, userId)
+  async function generateNewChate(ownerId, userId) {
+    debugger;
+    const mergedId = mergeBothIds(ownerId, userId)
     debugger;
     const roomRef = firestore().collection('rooms').doc(mergedId)
     .collection('messages').doc('message1');
-    debugger;
-    const messages = {
-      name: 'Los Angeles',
-      state: 'CA',
-      country: 'USA'
-    }
+    // const messages = {
+    //   name: 'Los Angeles',
+    //   state: 'CA',
+    //   country: 'USA'
+    // }
     debugger
-    await roomRef.set(messages);
+    await roomRef.set();
     debugger;
   }
 
   return (
     <ChatContext.Provider
       value={{
-        chat,
-        setChat,
+        chatMessages,
+        setChatMessages,
         addNewMessage,
         generateNewChate,
+        chatsCollection,
+        handleRequestMessages,
       }}
     >
       {children}

@@ -10,12 +10,13 @@ const PetDetailsScreen = ({ route }) => {
   const { generateNewChate, } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
 
-  const chatWithPetOwner = () => {
+  const chatWithPetOwner = (ownerId) => {
     debugger;
     const userId = user.uid;
     debugger
-    generateNewChate(userId);
+    generateNewChate(ownerId, userId);
   }
+
   const {
     img,
     name,
@@ -25,6 +26,7 @@ const PetDetailsScreen = ({ route }) => {
     weight,
     gender,
     description,
+    ownerId,
   } = petDetailsObj;
   return (
     <ScrollView>
@@ -35,7 +37,7 @@ const PetDetailsScreen = ({ route }) => {
             <Text style={styles.breedTitle}>{name}</Text>
             <Text>{breed}</Text>
           </View>
-          <MainButton onPress={() => chatWithPetOwner()}>Lo quiero</MainButton>
+          <MainButton onPress={() => chatWithPetOwner(ownerId)}>Lo quiero</MainButton>
         </View>
         <DetailText title="Protectora" text={protective} />
         <DetailText title="Edad" text={age + " Años"} style={styles.details} />
