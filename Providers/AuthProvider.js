@@ -99,9 +99,9 @@ export const AuthProvider = ({children}) => {
             console.error(e);
           }
         },
-        logout: async () => {
+        logout: async (navigation) => {
           try {
-            await auth().signOut();
+            await auth().signOut().then(navigation.navigate('PetsScreen'))
           } catch (e) {
             console.error(e);
           }

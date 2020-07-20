@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { PetContext } from '../../navigation/PetsProvider';
+import { PetContext } from '../../Providers/PetsProvider';
 import AdoptedGrid from "../../components/Grid/AdoptedGrid";
 
 const PetsAdoptedScreen = ({ navigation }) => {

@@ -13,14 +13,7 @@ const ChatStackScreen = ({navigation}) => (
       name='ChatsScreen'
       component={ChatsScreen}
       options={{
-        headerTitle: 'Todos los chats'
-      }}
-    />
-    <Stack.Screen
-      name='ChatScreen'
-      component={ChatScreen}
-      options={{
-        headerTitle: 'Chatea para adoptar una mascota',
+        headerTitle: 'Todos los chats',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
@@ -30,6 +23,13 @@ const ChatStackScreen = ({navigation}) => (
             />
           </HeaderButtons>
         ),
+      }}
+    />
+    <Stack.Screen
+      name='ChatScreen'
+      component={ChatScreen}
+      options={{
+        headerTitle: 'Chatea para adoptar una mascota',
       }}
     />
   </Stack.Navigator>

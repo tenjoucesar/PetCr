@@ -3,10 +3,10 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Button, Image} from 'react-native';
 import GoogleSignInButton from '../../components/LoginButtons/GoogleSigninButton';
 import FacebookSignInButton from '../../components/LoginButtons/FacebookSigninButton';
-import {AuthContext} from '../../navigation/AuthProvider';
+import {AuthContext} from '../../Providers/AuthProvider';
 import Loading from '../../components/Loading';
 
-function Login() {
+function Login({navigation}) {
   const {user, logout, initializing} = useContext(AuthContext);
 
   if (initializing) {
@@ -29,7 +29,7 @@ function Login() {
     <View style={styles.container}>
       <Text>Welcome {user.email}</Text>
       <Image source={{uri: user.photoURL}} style={styles.imageProfile} />
-      <Button title="Desconectarse" onPress={() => logout()} />
+      <Button title="Desconectarse" onPress={() => logout(navigation)} />
     </View>
   );
 }

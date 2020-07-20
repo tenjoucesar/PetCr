@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { AuthContext } from '../navigation/AuthProvider';
+import { AuthContext } from '../Providers/AuthProvider';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function CustomDrawerContent({ navigation, user }) {
@@ -55,7 +55,10 @@ function CustomDrawerContent({ navigation, user }) {
         <DrawerItem
           label='Chat'
           icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
-          onPress={() => { navigation.navigate('ChatsScreen') }}
+          // onPress={() => { navigation.navigate('ChatsScreen') }}
+          onPress={() => {
+            navigation.navigate('ChatsStackScreen', { screen: 'ChatsScreen'})
+            }}
         />
         <DrawerItem
           label='Perfil'
