@@ -47,7 +47,7 @@ export const ChatProvider = ({ children }) => {
   }
 
   async function generateNewChate(ownerId, userId, navigation) {
-    const chatId = (ownerId, userId) => {return ownerId < userId ? ownerId+userId : userId+ownerId};
+    const chatId = ownerId < userId ? `${ownerId}${userId}` : `${userId}${ownerId}`; //Mergin both Ids we create a unique chatId
     const roomRef = firestore().collection('rooms').doc(chatId);
 
     await roomRef.set({

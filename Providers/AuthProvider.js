@@ -59,42 +59,37 @@ export const AuthProvider = ({children}) => {
         setUser,
         initializing,
         setInitializing,
-        facebookLogin: async () => {
+        facebookLogin: () => {
           try {
             setInitializing(true);
-            const result = await LoginManager.logInWithPermissions([
-              'public_profile',
-              'email',
-            ]);
-            if (result.isCancelled) {
-              throw 'Cancelaste el inicio de sesion';
-            }
-            const data = await AccessToken.getCurrentAccessToken();
-            if (!data) {
-              throw 'Algo salio mal obteniendo tus valores de inicio de sesion';
-            }
-            const facebookCredential = auth.FacebookAuthProvider.credential(
-              data.accessToken,
-            );
-            return auth().signInWithCredential(facebookCredential);
+            debugger
+            LoginManager.logInWithPermissions(['public_profile','email']).then(result => {
+              debugger
+              if (result.isCancelled) {
+                setInitializing(false);
+              }
+              AccessToken.getCurrentAccessToken().then(data => {
+                const facebookCredential = auth.FacebookAuthProvider.credential(
+                  data.accessToken,
+                );
+                return auth().signInWithCredential(facebookCredential);
+              })
+            })
           } catch (e) {
+            debugger;
             console.error(e);
           }
         },
-        googleLogin: async () => {
+        googleLogin: () => {
           try {
-            debugger;
             setInitializing(true);
-            debugger;
-
-            const {idToken} = await GoogleSignin.signIn();
-            debugger;
-
-            console.log(idToken);
-            const googleCredential = auth.GoogleAuthProvider.credential(
-              idToken,
-            );
-            return auth().signInWithCredential(googleCredential);
+            GoogleSignin.signIn().then((data) => {
+              debugger;
+              const googleCredential = auth.GoogleAuthProvider.credential(data.idToken);
+              return auth().signInWithCredential(googleCredential);
+            }).catch(error => {
+              setInitializing(false);
+            })
           } catch (e) {
             console.error(e);
           }
