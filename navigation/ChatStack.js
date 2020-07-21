@@ -3,16 +3,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
 import HeaderButton from '../components/Buttons';
 import ChatScreen from '../Screens/Chat';
+import ChatsScreen from '../Screens/Chats';
 
 const Stack = createStackNavigator();
 
 const ChatStackScreen = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name='ChatScreen'
-      component={ChatScreen}
+      name='ChatsScreen'
+      component={ChatsScreen}
       options={{
-        headerTitle: 'Acceso',
+        headerTitle: 'Todos los chats',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
@@ -22,6 +23,13 @@ const ChatStackScreen = ({navigation}) => (
             />
           </HeaderButtons>
         ),
+      }}
+    />
+    <Stack.Screen
+      name='ChatScreen'
+      component={ChatScreen}
+      options={{
+        headerTitle: 'Chatea para adoptar una mascota',
       }}
     />
   </Stack.Navigator>

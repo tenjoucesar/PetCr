@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { DetailText } from '../../components/Text';
 import { MainButton } from '../../components/Buttons';
+import {AuthContext} from '../../Providers/AuthProvider';
+import {ChatContext} from '../../Providers/ChatProvider';
+import PetDetailsModal from './modal';
 
-const PetDetailsScreen = ({ route }) => {
+const PetDetailsScreen = ({ route, navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const { generateNewChate, } = useContext(ChatContext);
+  const { user } = useContext(AuthContext);
   const petDetailsObj = route.params.params.item;
+
+  const chatWithPetOwner = (ownerId) => {
+    setModalVisible(!modalVisible)
+    const userId = user.uid;
+    generateNewChate(ownerId, userId, navigation);
+  }
+
   const {
     img,
     name,
@@ -14,9 +27,16 @@ const PetDetailsScreen = ({ route }) => {
     weight,
     gender,
     description,
+    ownerId,
   } = petDetailsObj;
   return (
     <ScrollView>
+    <PetDetailsModal
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      chatWithPetOwner={chatWithPetOwner}
+      ownerId={ownerId}
+    />
       <Image source={{ uri: img }} style={styles.image} />
       <View style={styles.container}>
         <View style={styles.breedContainer}>
@@ -24,7 +44,8 @@ const PetDetailsScreen = ({ route }) => {
             <Text style={styles.breedTitle}>{name}</Text>
             <Text>{breed}</Text>
           </View>
-          <MainButton>Lo quiero</MainButton>
+          <MainButton onPress={() => setModalVisible(true)}>Lo quiero</MainButton>
+
         </View>
         <DetailText title="Protectora" text={protective} />
         <DetailText title="Edad" text={age + " Años"} style={styles.details} />

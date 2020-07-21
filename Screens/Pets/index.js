@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import PetGrid from "../../components/Grid/PetGrid";
 import Loading from '../../components/Loading';
-import { PetContext } from '../../navigation/PetsProvider';
+import { PetContext } from '../../Providers/PetsProvider';
 import Tab from  '../../components/Tabs/Tab';
 import { TAB_KEYS } from '../../components/Tabs/constants';
 

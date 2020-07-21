@@ -1,10 +1,10 @@
 import React, { useCallback, useContext } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { ChatContext } from '../../navigation/ChatProvider';
-import { AuthContext } from '../../navigation/AuthProvider';
+import { ChatContext } from '../../Providers/ChatProvider';
+import { AuthContext } from '../../Providers/AuthProvider';
 
-export function ChatScreen() {
-  const { chat, addNewMessage } = useContext(ChatContext);
+export function ChatScreen({route}) {
+  const { chatMessages, addNewMessage } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
 
   const tempUser = user && {
@@ -15,15 +15,16 @@ export function ChatScreen() {
 
   const onSend = useCallback((messages) => {
     const formattedMessage = {...messages[0], createdAt: Date.now() ,sent: true }
-    addNewMessage(formattedMessage)
+    const chatId = route.params.chatId;
+    addNewMessage(formattedMessage, chatId)
   }, [])
 
   return (
     <GiftedChat
       onSend={messages => onSend(messages)}
-      messages={chat}
+      messages={chatMessages}
       user={tempUser}
     />
-  )
+  );
 }
 export default ChatScreen;
