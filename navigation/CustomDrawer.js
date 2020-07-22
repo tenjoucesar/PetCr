@@ -17,6 +17,7 @@ function CustomDrawerContent({navigation, user}) {
           <>
             <View style={styles.userInfoContainer}>
               <Image
+                // source={user.photoURL && user.photoURL.length!=0?{uri: user.photoURL}:null}
                 source={{uri: user.photoURL}}
                 style={styles.imageProfile}
               />

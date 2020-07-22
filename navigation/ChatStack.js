@@ -12,6 +12,8 @@ const ChatStackScreen = ({navigation}) => (
     <Stack.Screen
       name='ChatsScreen'
       component={ChatsScreen}
+      unmountOnBlur={true}
+      options={{unmountOnBlur: true}}
       options={{
         headerTitle: 'Conversaciones',
         headerLeft: () => (
