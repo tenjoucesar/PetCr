@@ -24,7 +24,7 @@ export default function Routes() {
         <Drawer.Screen name='AdoptedScreen' component={AdoptedStackScreen} />
         <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
         <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
-        <Drawer.Screen name='ChatsStackScreen' component={ChatStackScreen} />
+        <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
         <Drawer.Screen name="NewPet" component={NewPetStack} />
       </Drawer.Navigator>
   );

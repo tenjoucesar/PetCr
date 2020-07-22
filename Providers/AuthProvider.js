@@ -97,13 +97,31 @@ export const AuthProvider = ({children}) => {
         },
         logout: async (navigation) => {
           try {
-            await auth().signOut().then(
-              navigation.navigate('PetsStackScreen')
-            )
+            await auth().signOut().then(navigation.navigate('PetsStackScreen'))
           } catch (e) {
             console.error(e);
           }
         },
+        emailAndPassLogin:  () => {
+          debugger;
+          auth()
+          .signInWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
+          // .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
+          .then(() => {
+            console.log('User account created & signed in!');
+          })
+          .catch(error => {
+            if (error.code === 'auth/email-already-in-use') {
+              console.log('That email address is already in use!');
+            }
+
+            if (error.code === 'auth/invalid-email') {
+              console.log('That email address is invalid!');
+            }
+
+            console.error(error);
+          });
+        }
       }}>
       {children}
     </AuthContext.Provider>

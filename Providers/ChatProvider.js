@@ -39,18 +39,20 @@ export const ChatProvider = ({ children }) => {
       const useRef = firestore().collection('users').doc(key).collection('userChatRooms');
       useRef.onSnapshot(querySnapshot => {
         const chatsStack = [];
+        querySnapshot.empty ? setChatsCollection([]) : '';
+        //  here at the '' we can test using the forEach rather than calling it when is empty..
         querySnapshot.forEach(doc => {
-          const {chatId, contacted} = doc.data();
+          const {chatId, sender} = doc.data();
           const lastMessageRef = chatsRef.doc(chatId).collection('messages').orderBy('createdAt', 'desc').limit(1);
           lastMessageRef.onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
               const lastMessage = doc.data();
               if (chatsStack.length) {
                 chatsStack.map(chat => {
-                  chat.chatId === chatId ? chat.lastMessage = lastMessage : chatsStack.push({chatId, contacted, lastMessage});
+                  chat.chatId === chatId ? chat.lastMessage = lastMessage : chatsStack.push({chatId, sender, lastMessage});
                 })
               } else {
-                chatsStack.push({chatId, contacted, lastMessage})
+                chatsStack.push({chatId, sender, lastMessage})
               }
             });
             setChatsCollection(chatsStack);
@@ -62,16 +64,17 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  async function assignNewChatToUsers(owner, userId, chatId, message){
+  async function assignNewChatToUsers(owner, sender, chatId, message){
     const batch = firestore().batch();
-    const batchObject = {chatId, contacted: owner}
+    // const batchObject = {chatId, contacted: owner, sender}
     const ownerId = owner.ownerId;
+    const senderId =  sender.senderId;
 
     const ownerRef = firestore().collection('users').doc(ownerId).collection('userChatRooms').doc(chatId);
-    batch.set(ownerRef, batchObject);
+    batch.set(ownerRef, {chatId,  contacted: owner, sender});
 
-    const userRef = firestore().collection('users').doc(userId).collection('userChatRooms').doc(chatId);
-    batch.set(userRef, batchObject);
+    const userRef = firestore().collection('users').doc(senderId).collection('userChatRooms').doc(chatId);
+    batch.set(userRef, {chatId, contacted: sender, sender: owner});
 
     const newChatRef = firestore().collection('rooms').doc(chatId).collection('messages').doc(chatId);
     batch.set(newChatRef, message);
@@ -86,10 +89,11 @@ export const ChatProvider = ({ children }) => {
     await newChatRef.add(message).then(handleRequestMessages(chat));
   }
 
-  async function generateNewChat(owner, userId, navigation) {
+  async function generateNewChat(owner, sender, navigation) {
     const ownerId = owner.ownerId;
-    const chatId = ownerId < userId ? `${ownerId}${userId}` : `${userId}${ownerId}`; //Mergin both Ids we create a unique chatId
-    navigation.navigate('ChatsStackScreen', { screen: 'ChatScreen', params: {chatId, owner, userId}, initial: false, });
+    const senderId = sender.senderId;
+    const chatId = ownerId < senderId ? `${ownerId}${senderId}` : `${senderId}${ownerId}`; //Mergin both Ids we create a unique chatId
+    navigation.navigate('ChatsStackScreen', { screen: 'ChatScreen', params: {chatId, owner, sender}, initial: false, });
   }
 
   return (

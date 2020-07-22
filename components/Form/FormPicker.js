@@ -37,30 +37,32 @@ export default function FormPicker({
         </View>
         <ErrorMessage error={errorMessage} />
       </TouchableOpacity>
-
-      <Modal visible={visible} animationType="fade">
-        <View style={styles.buttonContainer}>
-          <Button
-            title="close"
-            color={colors.primary}
-            onPress={() => setVisible(false)}
-          />
-        </View>
-        <FlatList
-          style={styles.optionsContainer}
-          data={items}
-          keyExtractor={item => item.value}
-          numColumns={2}
-          renderItem={({item}) => (
-            <PickerItemComponent
-              item={item}
-              onPress={() => {
-                setVisible(false);
-                onChange(item.value, name);
-              }}
+      <Modal visible={visible} animationType="slide" transparent={true}>
+        <View style={styles.modal}>
+          <View style={styles.modalContainer}>
+            <View style={styles.buttonContainer}>
+              <Button
+                onPress={() => setVisible(false)}
+                title="Cerrar"
+                color={colors.primary}
+              />
+            </View>
+            <FlatList
+              data={items}
+              keyExtractor={item => item.value}
+              numColumns={2}
+              renderItem={({item}) => (
+                <PickerItemComponent
+                  item={item}
+                  onPress={() => {
+                    setVisible(false);
+                    onChange(item.value, name);
+                  }}
+                />
+              )}
             />
-          )}
-        />
+          </View>
+        </View>
       </Modal>
     </>
   );
@@ -78,5 +80,29 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   text: {textTransform: 'capitalize'},
-  buttonContainer: {width: 200, alignSelf: 'center'},
+  buttonContainer: {
+    borderRadius: 20,
+    marginBottom: 10,
+    width: 100,
+  },
+  modal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    width: '90%',
+    height: 170,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 });

@@ -15,8 +15,12 @@ const PetDetailsScreen = ({ route, navigation }) => {
   const chatWithPetOwner = (owner) => {
     debugger;
     setModalVisible(!modalVisible)
-    const userId = user.uid;
-    generateNewChat(owner, userId, navigation);
+    const sender = {
+      name: user.displayName,
+      senderId: user.uid,
+      photoURL: user.photoURL,
+    };
+    generateNewChat(owner, sender, navigation);
   }
 
   const {

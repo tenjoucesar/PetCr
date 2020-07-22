@@ -6,9 +6,10 @@ function ChatsScreen ({navigation, route}) {
   const {chatsCollection, handleRequestMessages, handleChatsCall} = useContext(ChatContext);
 
   useEffect(() => {
-    return handleChatsCall(route.params.userId);
-  },[route])
-
+    if (route.params && route.params.userId) {
+      return handleChatsCall(route.params.userId);
+    }
+  },[navigation])
 
   const executeRequestChat = (chatId) => {
     debugger;
@@ -41,11 +42,11 @@ function ChatsScreen ({navigation, route}) {
           <TouchableOpacity key={i} onPress={() => executeRequestChat(chat.chatId)} style={styles.chatContainer}>
               <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <Image
-                  source={{ uri: chat.contacted.photoURL }}
+                  source={{ uri: chat.sender.photoURL }}
                   style={styles.imageProfile}
                 />
                 <View style={styles.messageContainer}>
-                  <Text style={styles.userName}>{chat.contacted.name}</Text>
+                  <Text style={styles.userName}>{chat.sender.name}</Text>
                   <Text style={styles.chatMessage} numberOfLines={1}>{chat.lastMessage.text}</Text>
                 </View>
                   <Text style={styles.timer}>{dateValue(chat.lastMessage.createdAt)}</Text>
