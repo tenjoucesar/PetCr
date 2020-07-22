@@ -11,11 +11,12 @@ const PetDetailsScreen = ({ route, navigation }) => {
   const { generateNewChate, } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const petDetailsObj = route.params.params.item;
-
-  const chatWithPetOwner = (ownerId) => {
+  debugger;
+  const chatWithPetOwner = (owner) => {
+    debugger;
     setModalVisible(!modalVisible)
     const userId = user.uid;
-    generateNewChate(ownerId, userId, navigation);
+    generateNewChate(owner, userId, navigation);
   }
 
   const {
@@ -27,7 +28,7 @@ const PetDetailsScreen = ({ route, navigation }) => {
     weight,
     gender,
     description,
-    ownerId,
+    owner,
   } = petDetailsObj;
   return (
     <ScrollView>
@@ -35,7 +36,7 @@ const PetDetailsScreen = ({ route, navigation }) => {
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       chatWithPetOwner={chatWithPetOwner}
-      ownerId={ownerId}
+      owner={owner}
     />
       <Image source={{ uri: img }} style={styles.image} />
       <View style={styles.container}>

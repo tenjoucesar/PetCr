@@ -46,9 +46,18 @@ export default function index({navigation}) {
       const storageRef = storage().ref(path);
       await storageRef.putFile(img);
       const imgPath = await storageRef.getDownloadURL();
+      const postValues = {
+        ...values,
+        img: imgPath,
+        owner: {
+          ownerId: user.uid,
+          name: user.displayName,
+          photoURL: user.photoURL,
+        }
+      }
       await firestore()
         .collection('pets')
-        .add({...values, user: user._user.uid, img: imgPath});
+        .add(postValues);
       navigation.navigate('PetsScreen');
       setLoading(false);
     } catch (error) {

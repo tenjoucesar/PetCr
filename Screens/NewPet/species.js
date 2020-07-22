@@ -11,10 +11,4 @@ export default [
     backgroundColor: 'green',
     icon: 'dog',
   },
-  {
-    label: 'Perro',
-    value: 'dog',
-    backgroundColor: 'purple',
-    icon: 'dog',
-  },
 ];

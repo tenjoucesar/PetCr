@@ -11,7 +11,7 @@ export const ChatProvider = ({ children }) => {
 
   function handleRequestMessages(key) {
     if (key) {
-      const newChatRef = firestore().collection('rooms').doc(key).collection('messages');
+      const newChatRef = chatsRef.doc(key).collection('messages');
       const orDeredChatRef = newChatRef.orderBy("createdAt", "desc");
       orDeredChatRef.onSnapshot(querySnapshot => {
         const messagesCollection = [];
@@ -34,10 +34,18 @@ export const ChatProvider = ({ children }) => {
     chatsRef.onSnapshot(querySnapshot => {
       const chatsStack = [];
       querySnapshot.forEach(doc => {
-        const {chatId} = doc.data();
-        chatsStack.push(chatId)
+        const {chatId, contacted} = doc.data();
+        const lastMessageRef = chatsRef.doc(chatId).collection('messages').orderBy('createdAt', 'desc').limit(1);
+
+        lastMessageRef.onSnapshot(querySnapshot => {
+
+          querySnapshot.forEach(doc => {
+            const lastMessage = doc.data();
+            chatsStack.push({chatId, contacted, lastMessage})
+          });
+          setChatsCollection(chatsStack);
+        })
       })
-      setChatsCollection(chatsStack);
     })
   }, []);
 
@@ -46,12 +54,14 @@ export const ChatProvider = ({ children }) => {
     await newChatRef.add(message);
   }
 
-  async function generateNewChate(ownerId, userId, navigation) {
+  async function generateNewChate(owner, userId, navigation) {
+    const ownerId = owner.ownerId
     const chatId = ownerId < userId ? `${ownerId}${userId}` : `${userId}${ownerId}`; //Mergin both Ids we create a unique chatId
     const roomRef = firestore().collection('rooms').doc(chatId);
 
     await roomRef.set({
-      chatId
+      chatId,
+      contacted: owner,
     }).then(
       navigation.navigate('ChatsStackScreen', { screen: 'ChatScreen', params: {chatId}, initial: false, }),
       handleRequestMessages(chatId)

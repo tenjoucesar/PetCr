@@ -12,7 +12,7 @@ export const PetsProvider = ({ children }) => {
     return petsDB.onSnapshot(querySnapshot => {
       const petsCollection = [];
       querySnapshot.forEach(doc => {
-        const { name, img, gender, description, specie, yearOfBirth, adopted, ownerId, } = doc.data();
+        const { name, img, gender, description, specie, yearOfBirth, adopted, owner, } = doc.data();
         petsCollection.push({
           id: doc.id,
           name,
@@ -22,7 +22,7 @@ export const PetsProvider = ({ children }) => {
           specie,
           yearOfBirth,
           adopted,
-          ownerId,
+          owner,
         });
       });
       setPets(petsCollection);

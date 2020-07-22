@@ -62,9 +62,7 @@ export const AuthProvider = ({children}) => {
         facebookLogin: () => {
           try {
             setInitializing(true);
-            debugger
             LoginManager.logInWithPermissions(['public_profile','email']).then(result => {
-              debugger
               if (result.isCancelled) {
                 setInitializing(false);
               }
@@ -76,7 +74,6 @@ export const AuthProvider = ({children}) => {
               })
             })
           } catch (e) {
-            debugger;
             console.error(e);
           }
         },
@@ -84,7 +81,6 @@ export const AuthProvider = ({children}) => {
           try {
             setInitializing(true);
             GoogleSignin.signIn().then((data) => {
-              debugger;
               const googleCredential = auth.GoogleAuthProvider.credential(data.idToken);
               return auth().signInWithCredential(googleCredential);
             }).catch(error => {
@@ -96,7 +92,7 @@ export const AuthProvider = ({children}) => {
         },
         logout: async (navigation) => {
           try {
-            await auth().signOut().then(navigation.navigate('PetsScreen'))
+            await auth().signOut().then(navigation.navigate('PetsStackScreen'))
           } catch (e) {
             console.error(e);
           }

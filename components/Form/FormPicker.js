@@ -47,9 +47,10 @@ export default function FormPicker({
           />
         </View>
         <FlatList
+          style={styles.optionsContainer}
           data={items}
           keyExtractor={item => item.value}
-          numColumns={3}
+          numColumns={2}
           renderItem={({item}) => (
             <PickerItemComponent
               item={item}
@@ -66,8 +67,12 @@ export default function FormPicker({
 }
 
 const styles = StyleSheet.create({
+  optionsContainer: {
+    // marginTop: 40,
+    // width: 200,
+    // height: 200,
+  },
   container: {
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,

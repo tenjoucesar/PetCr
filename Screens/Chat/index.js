@@ -6,7 +6,7 @@ import { AuthContext } from '../../Providers/AuthProvider';
 export function ChatScreen({route}) {
   const { chatMessages, addNewMessage } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
-
+  debugger;
   const tempUser = user && {
     _id: user.uid,
     name: user.displayName,

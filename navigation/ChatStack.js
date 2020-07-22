@@ -13,7 +13,7 @@ const ChatStackScreen = ({navigation}) => (
       name='ChatsScreen'
       component={ChatsScreen}
       options={{
-        headerTitle: 'Todos los chats',
+        headerTitle: 'Conversaciones',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item

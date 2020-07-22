@@ -9,7 +9,7 @@ export default function SpeciePickerItem({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon icon={icon} backgroundColor={backgroundColor} size={70} />
+        <Icon icon={icon} backgroundColor={backgroundColor} size={60} />
         <Text style={styles.text}>{label}</Text>
       </View>
     </TouchableOpacity>
@@ -19,8 +19,8 @@ export default function SpeciePickerItem({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   text: {marginTop: 5, textAlign: 'center'},
 });

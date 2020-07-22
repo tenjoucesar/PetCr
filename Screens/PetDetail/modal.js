@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Modal, StyleSheet } from 'react-native'
 import { MainButton } from '../../components/Buttons';
 
-export const PetDetailsModal = ({ modalVisible, setModalVisible, chatWithPetOwner, ownerId }) => (
+export const PetDetailsModal = ({ modalVisible, setModalVisible, chatWithPetOwner, owner}) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -15,7 +15,7 @@ export const PetDetailsModal = ({ modalVisible, setModalVisible, chatWithPetOwne
 
         <View style={styles.modalButtonsContainer}>
 
-          <MainButton onPress={() => chatWithPetOwner(ownerId)}>
+          <MainButton onPress={() => chatWithPetOwner(owner)}>
             Si
         </MainButton>
           <MainButton onPress={() => setModalVisible(!modalVisible)}>
