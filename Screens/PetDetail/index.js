@@ -8,15 +8,15 @@ import PetDetailsModal from './modal';
 
 const PetDetailsScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { generateNewChate, } = useContext(ChatContext);
+  const { generateNewChat, } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
   const petDetailsObj = route.params.params.item;
-  debugger;
+
   const chatWithPetOwner = (owner) => {
     debugger;
     setModalVisible(!modalVisible)
     const userId = user.uid;
-    generateNewChate(owner, userId, navigation);
+    generateNewChat(owner, userId, navigation);
   }
 
   const {

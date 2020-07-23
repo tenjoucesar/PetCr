@@ -1,15 +1,18 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import { ChatContext } from '../../Providers/ChatProvider';
 
-function ChatsScreen ({navigation}) {
-  const {chatsCollection, handleRequestMessages} = useContext(ChatContext);
+function ChatsScreen ({navigation, route}) {
+  const {chatsCollection, handleRequestMessages, handleChatsCall} = useContext(ChatContext);
+
+  useEffect(() => {
+    return handleChatsCall(route.params.userId);
+  },[route])
+
 
   const executeRequestChat = (chatId) => {
     debugger;
-    navigation.navigate('ChatScreen', {
-      chatId,
-    })
+    navigation.navigate('ChatScreen', {chatId})
     handleRequestMessages(chatId)
   }
 
@@ -18,7 +21,7 @@ function ChatsScreen ({navigation}) {
     return date.getDate() === today.getDate() &&
         date.getMonth() === today.getMonth() &&
         date.getFullYear() === today.getFullYear();
-};
+  };
 
   const dateValue = (value) => {
     const dateSent = new Date(value);
@@ -34,7 +37,7 @@ function ChatsScreen ({navigation}) {
   return (
     <>
       <View style={styles.chatStackContainer}>
-        {chatsCollection.map((chat, i) => (
+        {chatsCollection && chatsCollection.map((chat, i) => (
           <TouchableOpacity key={i} onPress={() => executeRequestChat(chat.chatId)} style={styles.chatContainer}>
               <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <Image

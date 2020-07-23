@@ -4,9 +4,9 @@ import { ChatContext } from '../../Providers/ChatProvider';
 import { AuthContext } from '../../Providers/AuthProvider';
 
 export function ChatScreen({route}) {
-  const { chatMessages, addNewMessage } = useContext(ChatContext);
+  const { chatMessages, addNewMessage, assignNewChatToUsers } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
-  debugger;
+
   const tempUser = user && {
     _id: user.uid,
     name: user.displayName,
@@ -15,13 +15,13 @@ export function ChatScreen({route}) {
 
   const onSend = useCallback((messages) => {
     const formattedMessage = {...messages[0], createdAt: Date.now() ,sent: true }
-    const chatId = route.params.chatId;
-    addNewMessage(formattedMessage, chatId)
-  }, [])
+    const { chatId, userId, owner } = route.params;
+    chatMessages.length >= 1  ?  addNewMessage(formattedMessage, chatId) :  assignNewChatToUsers(owner, userId, chatId, formattedMessage);
+  }, [chatMessages])
 
   return (
     <GiftedChat
-      onSend={messages => onSend(messages)}
+      onSend={(messages) => onSend(messages)}
       messages={chatMessages}
       user={tempUser}
     />

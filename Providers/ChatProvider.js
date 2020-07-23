@@ -31,41 +31,65 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    chatsRef.onSnapshot(querySnapshot => {
-      const chatsStack = [];
-      querySnapshot.forEach(doc => {
-        const {chatId, contacted} = doc.data();
-        const lastMessageRef = chatsRef.doc(chatId).collection('messages').orderBy('createdAt', 'desc').limit(1);
+    return handleChatsCall();
+  }, []);
 
-        lastMessageRef.onSnapshot(querySnapshot => {
-
-          querySnapshot.forEach(doc => {
-            const lastMessage = doc.data();
-            chatsStack.push({chatId, contacted, lastMessage})
-          });
-          setChatsCollection(chatsStack);
+  function handleChatsCall(key) {
+    if (key) {
+      const useRef = firestore().collection('users').doc(key).collection('userChatRooms');
+      useRef.onSnapshot(querySnapshot => {
+        const chatsStack = [];
+        querySnapshot.forEach(doc => {
+          const {chatId, contacted} = doc.data();
+          const lastMessageRef = chatsRef.doc(chatId).collection('messages').orderBy('createdAt', 'desc').limit(1);
+          lastMessageRef.onSnapshot(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const lastMessage = doc.data();
+              if (chatsStack.length) {
+                chatsStack.map(chat => {
+                  chat.chatId === chatId ? chat.lastMessage = lastMessage : chatsStack.push({chatId, contacted, lastMessage});
+                })
+              } else {
+                chatsStack.push({chatId, contacted, lastMessage})
+              }
+            });
+            setChatsCollection(chatsStack);
+          })
         })
       })
+    } else {
+      setChatsCollection(null);
+    }
+  }
+
+  async function assignNewChatToUsers(owner, userId, chatId, message){
+    const batch = firestore().batch();
+    const batchObject = {chatId, contacted: owner}
+    const ownerId = owner.ownerId;
+
+    const ownerRef = firestore().collection('users').doc(ownerId).collection('userChatRooms').doc(chatId);
+    batch.set(ownerRef, batchObject);
+
+    const userRef = firestore().collection('users').doc(userId).collection('userChatRooms').doc(chatId);
+    batch.set(userRef, batchObject);
+
+    const newChatRef = firestore().collection('rooms').doc(chatId).collection('messages').doc(chatId);
+    batch.set(newChatRef, message);
+
+    batch.commit().then(() => {
+      handleRequestMessages(chatId)
     })
-  }, []);
+  }
 
   async function addNewMessage(message, chat) {
     const newChatRef = firestore().collection('rooms').doc(chat).collection('messages');
-    await newChatRef.add(message);
+    await newChatRef.add(message).then(handleRequestMessages(chat));
   }
 
-  async function generateNewChate(owner, userId, navigation) {
-    const ownerId = owner.ownerId
+  async function generateNewChat(owner, userId, navigation) {
+    const ownerId = owner.ownerId;
     const chatId = ownerId < userId ? `${ownerId}${userId}` : `${userId}${ownerId}`; //Mergin both Ids we create a unique chatId
-    const roomRef = firestore().collection('rooms').doc(chatId);
-
-    await roomRef.set({
-      chatId,
-      contacted: owner,
-    }).then(
-      navigation.navigate('ChatsStackScreen', { screen: 'ChatScreen', params: {chatId}, initial: false, }),
-      handleRequestMessages(chatId)
-    );
+    navigation.navigate('ChatsStackScreen', { screen: 'ChatScreen', params: {chatId, owner, userId}, initial: false, });
   }
 
   return (
@@ -74,9 +98,11 @@ export const ChatProvider = ({ children }) => {
         chatMessages,
         setChatMessages,
         addNewMessage,
-        generateNewChate,
+        generateNewChat,
         chatsCollection,
         handleRequestMessages,
+        handleChatsCall,
+        assignNewChatToUsers,
       }}
     >
       {children}

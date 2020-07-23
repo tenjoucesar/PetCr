@@ -6,12 +6,26 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 export const AuthContext = createContext({});
 const userDB = firestore().collection('users');
+const DebounceDueTime = 200;
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
+  var debounceTimeout;
   function onAuthStateChanged(user) {
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    debounceTimeout = setTimeout(() =>{
+        debounceTimeout = null;
+
+        handleAuthStateChanged(user);
+    }, DebounceDueTime);
+  }
+
+  function handleAuthStateChanged(user) {
     setUser(user);
     if (user) {
       isNewUser(user);
@@ -26,7 +40,7 @@ export const AuthProvider = ({children}) => {
 
   async function addNewUser(user) {
     const {emailVerified, email, displayName, uid, photoURL} = user;
-    await userDB.add({
+    await userDB.doc(uid).set({
       displayName,
       email,
       emailVerified,
@@ -37,19 +51,10 @@ export const AuthProvider = ({children}) => {
   }
 
   function isNewUser(user) {
-    firestore()
-      .collection('users')
-      .where('uid', '==', user.uid)
-      .get()
-      .then(querySnapshot => {
-        const uidStack = [];
-        querySnapshot.forEach(documentSnapshot => {
-          const {uid} = documentSnapshot.data();
-          uidStack.push({uid});
-        });
-
-        return uidStack.length >= 1 ? setInitializing(false) : addNewUser(user);
-      });
+    const userRef = firestore().collection('users').doc(user.uid);
+    userRef.get().then( doc => {
+      !doc.exists ? addNewUser(user) : setInitializing(false);
+    })
   }
 
   return (
@@ -92,7 +97,9 @@ export const AuthProvider = ({children}) => {
         },
         logout: async (navigation) => {
           try {
-            await auth().signOut().then(navigation.navigate('PetsStackScreen'))
+            await auth().signOut().then(
+              navigation.navigate('PetsStackScreen')
+            )
           } catch (e) {
             console.error(e);
           }
