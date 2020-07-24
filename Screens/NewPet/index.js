@@ -12,7 +12,7 @@ import {
   SpeciePickerItem,
   Switch,
 } from '../../components/Form';
-import Loading from '../../components/Loading';
+import LoadingScreen from '../../Screens/LoadingScreen';
 import species from './species';
 import useForm from '../../hooks/useForm';
 
@@ -75,7 +75,7 @@ export default function index({navigation}) {
 
   const {name, description, specie, yearOfBirth, gender, img} = values;
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingScreen />;
 
   return (
     <ScrollView style={styles.container}>
@@ -131,7 +131,7 @@ export default function index({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 30,
-    marginVertical: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
 });

@@ -9,8 +9,7 @@ export default function SpeciePickerItem({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon icon={icon} backgroundColor={backgroundColor} size={60} />
-        <Text style={styles.text}>{label}</Text>
+        <Icon icon={icon} backgroundColor={backgroundColor} size={70} />
       </View>
     </TouchableOpacity>
   );
