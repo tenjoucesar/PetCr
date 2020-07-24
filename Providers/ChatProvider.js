@@ -5,7 +5,7 @@ export const ChatContext = createContext({});
 const chatsRef = firestore().collection('rooms');
 
 export const ChatProvider = ({ children }) => {
-  const [chatMessages, setChatMessages] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
   const [chatsCollection, setChatsCollection] = useState(null);
   const [loading, setLoading] = useState(true);
 
