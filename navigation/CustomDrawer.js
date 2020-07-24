@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 function CustomDrawerContent({navigation, user}) {
   const {logout} = useContext(AuthContext);
+  const userId = user && user.uid;
 
   return (
     <View style={{flex: 1}}>
@@ -81,7 +82,7 @@ function CustomDrawerContent({navigation, user}) {
             label='Chat'
             icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
             onPress={() => {
-              navigation.navigate('ChatsStackScreen', { screen: 'ChatsScreen'})
+              navigation.navigate('ChatsStackScreen', { screen: 'ChatsScreen', params: {userId}})
             }}
           />
             <DrawerItem
@@ -117,7 +118,7 @@ function CustomDrawerContent({navigation, user}) {
                   color="black"
                 />
               )}
-              onPress={() => logout()}
+              onPress={() => logout(navigation)}
             />
           </>
         )}
