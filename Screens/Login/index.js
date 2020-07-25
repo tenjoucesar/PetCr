@@ -7,7 +7,7 @@ import {AuthContext} from '../../Providers/AuthProvider';
 import Loading from '../../components/Loading';
 
 function Login({navigation}) {
-  const {user, logout, initializing} = useContext(AuthContext);
+  const {user, logout, initializing, emailAndPassLogin} = useContext(AuthContext);
 
   if (initializing) {
     return <Loading />;
@@ -21,6 +21,7 @@ function Login({navigation}) {
         </Text>
         <FacebookSignInButton />
         <GoogleSignInButton />
+        <Button onPress={() => emailAndPassLogin()} title='lOGUEATE CON TU CORREO  Y CONTRASE;A' />
       </View>
     );
   }
@@ -28,7 +29,7 @@ function Login({navigation}) {
   return (
     <View style={styles.container}>
       <Text>Welcome {user.email}</Text>
-      <Image source={{uri: user.photoURL}} style={styles.imageProfile} />
+      <Image source={user.photoURL && user.photoURL.length!=0?{uri: user.photoURL}:null} style={styles.imageProfile} />
       <Button title="Desconectarse" onPress={() => logout(navigation)} />
     </View>
   );

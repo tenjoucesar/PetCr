@@ -2,16 +2,14 @@ import React from 'react';
 import {Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import colors from '../../constants/colors';
 
-const AppButton = ({title, onPress}) => {
-  return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={onPress}
-      activeOpacity={0.8}>
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
+const AppButton = ({title, onPress}) => (
+  <TouchableOpacity
+    style={styles.container}
+    onPress={onPress}
+    activeOpacity={0.8}>
+    <Text style={styles.text}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -34,12 +34,13 @@ const PickPreview = ({img, addPick}) => {
     if (!result) return;
     ImgPicker.launchImageLibrary(
       {
-        quality: 0.8,
+        quality: 0.5,
         mediaType: 'photo',
       },
       response => {
         if (response.uri) addPick(response.uri);
-        else Alert.alert('Error', 'Trata de nuevo mas tarde', [{text: 'Okay'}]);
+        else if (response.error)
+          Alert.alert('Error', 'Trata de nuevo', [{text: 'Okay'}]);
       },
     );
   };

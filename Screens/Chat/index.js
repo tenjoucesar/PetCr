@@ -15,8 +15,8 @@ export function ChatScreen({route}) {
 
   const onSend = useCallback((messages) => {
     const formattedMessage = {...messages[0], createdAt: Date.now() ,sent: true }
-    const { chatId, userId, owner } = route.params;
-    chatMessages.length >= 1  ?  addNewMessage(formattedMessage, chatId) :  assignNewChatToUsers(owner, userId, chatId, formattedMessage);
+    const { chatId, sender, owner } = route.params;
+    chatMessages.length >= 1  ?  addNewMessage(formattedMessage, chatId) :  assignNewChatToUsers(owner, sender, chatId, formattedMessage);
   }, [chatMessages])
 
   return (
