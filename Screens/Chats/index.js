@@ -12,7 +12,6 @@ function ChatsScreen ({navigation, route}) {
   },[navigation])
 
   const executeRequestChat = (chatId) => {
-    debugger;
     navigation.navigate('ChatScreen', {chatId})
     handleRequestMessages(chatId)
   }

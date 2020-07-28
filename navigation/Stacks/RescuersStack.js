@@ -1,16 +1,16 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../Screens/Login';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
-import HeaderButton from '../components/Buttons';
+import RescuersScreen from '../../Screens/Rescuers';
+import HeaderButton from '../../components/Buttons';
 
 const Stack = createStackNavigator();
 
-const LoginStackScreen = ({navigation}) => (
+const RescuersStackScreen = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="LoginScreen"
-      component={LoginScreen}
+      name='RescuersScreen'
+      component={RescuersScreen}
       options={{
         headerTitle: 'Acceso',
         headerLeft: () => (
@@ -25,6 +25,6 @@ const LoginStackScreen = ({navigation}) => (
       }}
     />
   </Stack.Navigator>
-)
+);
 
-export default LoginStackScreen;
+export default RescuersStackScreen;

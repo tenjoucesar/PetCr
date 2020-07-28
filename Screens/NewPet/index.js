@@ -35,7 +35,7 @@ const initialState = {
   yearOfBirth: '',
 };
 
-export default function index({navigation}) {
+export default function NewPetScreen({navigation}) {
   const [loading, setLoading] = useState(false);
   const {user} = useContext(AuthContext);
 
