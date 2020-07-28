@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
-import HeaderButton from '../components/Buttons';
-import PetsScreen from '../Screens/Pets';
-import PetDetailsScreen from '../Screens/PetDetail';
+import HeaderButton from '../../components/Buttons';
+import PetsScreen from '../../Screens/Pets';
+import PetDetailsScreen from '../../Screens/PetDetail';
 
 const Stack = createStackNavigator();
 

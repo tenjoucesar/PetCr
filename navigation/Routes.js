@@ -1,14 +1,15 @@
 import React, {useContext} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {AuthContext} from '../Providers/AuthProvider';
-import LoginStackScreen from './LoginStack';
-import PetsStackScreen from './PetsStack';
-import AdoptedStackScreen from './AdoptedStack';
-import ProfileStackScreen from './ProfileStack';
-import RescuersStackScreen from './RescuersStack';
+import LoginStackScreen from './Stacks/LoginStack';
+import PetsStackScreen from './Stacks/PetsStack';
+import AdoptedStackScreen from './Stacks/AdoptedStack';
+import ChatStackScreen from './Stacks/ChatStack';
+import ProfileStackScreen from './Stacks/ProfileStack';
+import RescuersStackScreen from './Stacks/RescuersStack';
 import CustomDrawerContent from './CustomDrawer';
-import ChatStackScreen from './ChatStack';
-import NewPetStack from './NewPetStack';
+import NewPetStack from './Stacks/NewPetStack';
+import HomeScreenStack from './Stacks/HomeScreenStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -17,7 +18,7 @@ export default function Routes() {
 
   return (
       <Drawer.Navigator
-        initialRouteName='Home'
+        initialRouteName='HomeScreen'
         drawerContent={(props) => <CustomDrawerContent user={user} {...props} />}>
         <Drawer.Screen name='PetsStackScreen' component={PetsStackScreen} />
         <Drawer.Screen name='LoginScreen' component={LoginStackScreen} />
@@ -25,7 +26,9 @@ export default function Routes() {
         <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
         <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
         <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
-        <Drawer.Screen name="NewPet" component={NewPetStack} />
+        {/* If use logout we unmount the component so we reload new chats if needed. */}
+        <Drawer.Screen name='NewPetScreen' component={NewPetStack} />
+        <Drawer.Screen name='HomeScreen' component={HomeScreenStack} />
       </Drawer.Navigator>
   );
 }
