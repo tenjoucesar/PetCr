@@ -28,7 +28,7 @@ export default function Routes() {
         <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
         {/* If use logout we unmount the component so we reload new chats if needed. */}
         <Drawer.Screen name='NewPetScreen' component={NewPetStack} />
-        <Drawer.Screen name='HomeScreen' component={HomeScreenStack} />
+        <Drawer.Screen name='HomeScreen' gestureEnabled={false} component={HomeScreenStack} />
       </Drawer.Navigator>
   );
 }

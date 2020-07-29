@@ -32,21 +32,20 @@ const PickPreview = ({img, addPick}) => {
   const pickImage = async () => {
     const result = await getPermissions();
     if (!result) return;
-    ImgPicker.launchImageLibrary(
-      {
+    ImgPicker.launchImageLibrary({
         quality: 0.5,
+        maxWidth: 500,
+        maxHeight: 500,
         mediaType: 'photo',
       },
       response => {
         if (response.uri) addPick(response.uri);
         else if (response.error)
           Alert.alert('Error', 'Trata de nuevo', [{text: 'Okay'}]);
-      },
-    );
+      });
   };
 
   const onHandlePress = () => {
-    console.log('gg');
     if (!img) pickImage();
     else
       Alert.alert('Borrar', 'Seguro que quiere eliminar la foto ?', [

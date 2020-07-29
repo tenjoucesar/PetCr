@@ -1,28 +1,26 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Item, HeaderButtons } from 'react-navigation-header-buttons';
-import HeaderButton from '../../components/Buttons';
-import HomeScreen from '../../Screens/HomeScreen';
+import DesiredLocationQuestionScreen from '../../Screens/HomeScreen/DesiredLocation';
+import DesiredPetQuestionScreen from '../../Screens/HomeScreen/DesiredPet';
 
 const Stack = createStackNavigator();
 
-const HomeScreenStack = ({navigation}) => (
+const HomeScreenStack = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name='HomeScreenStack'
-      component={HomeScreen}
+      name='DesiredPetQuestionScreen'
+      component={DesiredPetQuestionScreen}
       options={{
         headerTitle: 'Vamos a buscarte un amigo',
         headerTitleAlign:'center',
-        // headerLeft: () => (
-        //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        //     <Item
-        //       title='Menu'
-        //       iconName='navicon'
-        //       onPress={() => navigation.toggleDrawer()}
-        //     />
-        //   </HeaderButtons>
-        // )
+      }}
+    />
+    <Stack.Screen
+      name='DesiredLocationQuestionScreen'
+      component={DesiredLocationQuestionScreen}
+      options={{
+        headerTitle: 'Selecciona una Provincia',
+        headerTitleAlign:'center',
       }}
     />
   </Stack.Navigator>

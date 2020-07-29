@@ -12,10 +12,10 @@ const CustomHeaderCustom = (props) => (
   />
 );
 
-export const MainButton = ({ children, onPress }) => (
+export const MainButton = ({ children, onPress, disabled }) => (
   <View style={styles.buttonContainer}>
-    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-      <View style={styles.button}>
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress} disabled={disabled}>
+      <View style={disabled ? styles.disabledBtn : styles.button}>
         <Text style={styles.buttonText}>{children}</Text>
       </View>
     </TouchableOpacity>
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 10,
+  },
+  disabledBtn: {
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: '#eaeaea',
   },
   buttonText: {
     color: "white",

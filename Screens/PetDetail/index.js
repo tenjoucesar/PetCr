@@ -66,8 +66,9 @@ export default PetDetailsScreen;
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: 450,
+    minWidth: '100%',
+    minHeight: 400,
+    justifyContent: "center"
   },
   container: {
     margin: 15,
