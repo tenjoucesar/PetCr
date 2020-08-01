@@ -9,7 +9,6 @@ import { TAB_KEYS } from '../../components/Tabs/constants';
 function PetsScreen({ navigation }) {
   const [activeTab, setActiveTab ] = useState(TAB_KEYS[0]);
   const { pets, loading } = useContext(PetContext);
-  debugger;
 
   const tabItem = TAB_KEYS.map((tab) => (
     <Tab

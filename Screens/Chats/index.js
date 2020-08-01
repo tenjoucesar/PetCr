@@ -6,6 +6,7 @@ function ChatsScreen ({navigation, route}) {
   const {chatsCollection, handleRequestMessages, handleChatsCall} = useContext(ChatContext);
 
   useEffect(() => {
+    debugger;
     if (route.params && route.params.userId) {
       return handleChatsCall(route.params.userId);
     }

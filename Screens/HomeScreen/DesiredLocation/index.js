@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { MainButton } from '../../../components/Buttons/index';
+import { PetContext } from '../../../Providers/PetsProvider';
 import provincias from './provincias';
 
-const DesiredLocationQuestionScreen = ({ navigation }) => {
+function DesiredLocationQuestionScreen ({ navigation, route }) {
   const [province, setProvince] = useState('');
+  const { handlePetsRequest } = useContext(PetContext);
+  const desiredPet = route.params;
 
+  function onProvinceSelect(province, desiredPet) {
+    handlePetsRequest(province, desiredPet);
+    navigation.navigate('PetsStackScreen');
+  }
   return (
       <View style={styles.componentContainer}>
       <Text style={styles.tittle}>
@@ -22,14 +29,13 @@ const DesiredLocationQuestionScreen = ({ navigation }) => {
         onChangeItem={item => setProvince(item)}
         />
       <View style={styles.btnContainer}>
-        <MainButton disabled={!province} onPress={() => navigation.navigate('PetsStackScreen')}>
+        <MainButton disabled={!province} onPress={() => onProvinceSelect(province, desiredPet)}>
           continuar
         </MainButton>
       </View>
       <View style={styles.btnContainer}>
-        <Button title='No estoy seguro' />
+        <Button title='No estoy seguro' onPress={() => onProvinceSelect(province, desiredPet)}/>
       </View>
-
     </View>
   )
 }

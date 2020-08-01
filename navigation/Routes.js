@@ -19,16 +19,17 @@ export default function Routes() {
   return (
       <Drawer.Navigator
         initialRouteName='HomeScreen'
+        screenOptions={{}}
         drawerContent={(props) => <CustomDrawerContent user={user} {...props} />}>
+        <Drawer.Screen name='HomeScreen' component={HomeScreenStack} options={{gestureEnabled: false}} />
         <Drawer.Screen name='PetsStackScreen' component={PetsStackScreen} />
         <Drawer.Screen name='LoginScreen' component={LoginStackScreen} />
         <Drawer.Screen name='AdoptedScreen' component={AdoptedStackScreen} />
         <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
         <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
-        <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
         {/* If use logout we unmount the component so we reload new chats if needed. */}
+        <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
         <Drawer.Screen name='NewPetScreen' component={NewPetStack} />
-        <Drawer.Screen name='HomeScreen' gestureEnabled={false} component={HomeScreenStack} />
       </Drawer.Navigator>
   );
 }

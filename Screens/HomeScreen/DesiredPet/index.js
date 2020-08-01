@@ -11,18 +11,14 @@ const DesiredPetQuestionScreen = ({navigation}) => (
       Estas interesado en adoptar un
     </Text>
     <View style={styles.buttonsContainer}>
-      <MainButton onPress={() => navigation.navigate('DesiredLocationQuestionScreen', {
-          params: 'gato',
-        })}>
+      <MainButton onPress={() => navigation.navigate('DesiredLocationQuestionScreen', 'gato')}>
         <Icon name='cat' size={48} color='white' />
       </MainButton>
-      <MainButton onPress={() => navigation.navigate('DesiredLocationQuestionScreen', {
-          params: 'perro',
-        })}>
+      <MainButton onPress={() => navigation.navigate('DesiredLocationQuestionScreen', 'perro')}>
         <Icon name='dog' size={48} color='white' />
       </MainButton>
     </View>
-    <Button title='No estoy seguro' />
+    <Button title='No estoy seguro' onPress={() => navigation.navigate('DesiredLocationQuestionScreen','unsure')}/>
   </View>
 );
 
