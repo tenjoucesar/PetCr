@@ -21,13 +21,13 @@ function PetsScreen({ navigation }) {
   ));
 
   const renderPetItem = ({item}) => {
-    let { img, id } = item;
-
+    let { img, id, name } = item;
     if (item.specie === activeTab.tabKey) {
       return (
         <PetGrid
           img={img}
           key={id}
+          name={name}
           onSelect={() => navigation.navigate('PetDetails', {
             params: { item },
           })}
@@ -39,6 +39,7 @@ function PetsScreen({ navigation }) {
         <PetGrid
           img={img}
           key={id}
+          name={name}
           onSelect={() => navigation.navigate('PetDetails', {
             params: { item },
           })}
