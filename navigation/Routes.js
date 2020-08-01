@@ -18,7 +18,7 @@ export default function Routes() {
 
   return (
       <Drawer.Navigator
-        initialRouteName='HomeScreen'
+        initialRouteName='PetsStackScreen'
         screenOptions={{}}
         drawerContent={(props) => <CustomDrawerContent user={user} {...props} />}>
         <Drawer.Screen name='HomeScreen' component={HomeScreenStack} options={{gestureEnabled: false}} />

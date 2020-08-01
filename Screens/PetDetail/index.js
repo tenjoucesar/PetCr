@@ -42,7 +42,7 @@ const PetDetailsScreen = ({ route, navigation }) => {
       chatWithPetOwner={chatWithPetOwner}
       owner={owner}
     />
-      <Image source={{ uri: img }} style={styles.image} />
+      <Image source={{ uri: img }} style={styles.image} resizeMode='contain' />
       <View style={styles.container}>
         <View style={styles.breedContainer}>
           <View style={styles.breedTextContainer}>

@@ -34,6 +34,11 @@ export const PetsProvider = ({ children }) => {
     });
   }
 
+  useEffect(() => {
+
+    return handlePetsRequest();
+  }, [])
+
   async function AddNewPet() {
     await petsDB.add({
       name: 'test',
