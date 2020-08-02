@@ -7,7 +7,9 @@ export const PetsProvider = ({ children }) => {
   const [pets, setPets ] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const handlePetsRequest = (province, desiredPet) =>  {
+    // Missing to create a request based   on  this values, since we are missing more pets i'm going to create a ticket
+
     const petsDB = firestore().collection('pets');
     return petsDB.onSnapshot(querySnapshot => {
       const petsCollection = [];
@@ -30,7 +32,12 @@ export const PetsProvider = ({ children }) => {
         setLoading(false);
       }
     });
-  }, []);
+  }
+
+  useEffect(() => {
+
+    return handlePetsRequest();
+  }, [])
 
   async function AddNewPet() {
     await petsDB.add({
@@ -44,6 +51,7 @@ export const PetsProvider = ({ children }) => {
         pets,
         setPets,
         AddNewPet,
+        handlePetsRequest
       }}
     >
       {children}

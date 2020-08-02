@@ -1,10 +1,23 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import CostaRicaFlag from '../../images/costa-rica-flag.png';
+import Loading from '../../components/Loading';
 
-const PetGrid = ({img, onSelect}) => (
+const PetGrid = ({img, name, onSelect}) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={onSelect}>
-      <Image source={{uri: img}} style={styles.bgImage} />
+      <ImageBackground
+      source={{uri: img}}
+      style={styles.bgImage}
+      resizeMode='cover'
+      loadingIndicatorSource={() => <Loading />}
+       >
+        <View style={{display: 'flex', flexDirection: 'row', margin: 5}}>
+          <Image source={CostaRicaFlag}/>
+          <Text style={styles.province}>Alajuela</Text>
+        </View>
+        <Text style={styles.name}>{name}</Text>
+      </ImageBackground>
     </TouchableOpacity>
   </View>
 );
@@ -20,8 +33,21 @@ const styles = StyleSheet.create({
   },
   bgImage: {
     width: '100%',
-    height: '100%',
+    height: 150,
+    justifyContent: 'flex-end',
   },
+  name: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingLeft: 5,
+  },
+  province: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    paddingLeft: 10,
+  }
 });
 
 export default PetGrid;

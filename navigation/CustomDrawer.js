@@ -1,10 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import AppModal from '../components/AppModal';
 import { AuthContext } from '../Providers/AuthProvider';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function CustomDrawerContent({navigation, user}) {
+  const [modalVisible, setModalVisible] = useState(false);
   const {logout} = useContext(AuthContext);
   const userId = user && user.uid;
 
@@ -33,97 +36,61 @@ function CustomDrawerContent({navigation, user}) {
         )}
         <DrawerItem
           label="Mascotas"
-          icon={() => (
-            <Icon name="paw" size={30} color="black" style={styles.icon} />
-          )}
-          onPress={() => {
-            navigation.navigate('PetsScreen');
-          }}
+          icon={() => <Icon name="paw" size={30} color="black" style={styles.icon} />}
+          onPress={() => navigation.navigate('PetsStackScreen')}
         />
         <DrawerItem
           label="Acceso"
-          icon={() => (
-            <Icon name="sign-in" size={30} color="black" style={styles.icon} />
-          )}
-          onPress={() => {
-            navigation.navigate('LoginScreen');
-          }}
+          icon={() => <Icon name="sign-in" size={30} color="black" style={styles.icon} />}
+          onPress={() => navigation.navigate('LoginScreen')}
         />
-        {/* } */}
-
-
         <DrawerItem
           label="Adoptados"
-          icon={() => (
-            <Icon
-              name="check-square-o"
-              size={30}
-              color="black"
-              style={styles.icon}
-            />
-          )}
-          onPress={() => {
-            navigation.navigate('AdoptedScreen');
-          }}
+          onPress={() => navigation.navigate('AdoptedScreen')}
+          icon={() => <Icon name="check-square-o" size={30} color="black" style={styles.icon}/>}
         />
 
         <DrawerItem
           label="Rescatistas"
-          icon={() => (
-            <Icon name="home" size={30} color="black" style={styles.icon} />
-          )}
-          onPress={() => {
-            navigation.navigate('RescuersScreen');
-          }}
+          icon={() => <Icon name="home" size={30} color="black" style={styles.icon} />}
+          onPress={() => navigation.navigate('RescuersScreen')}
         />
 
         {user && (
           <>
-          <DrawerItem
-            label='Chat'
-            icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
-            onPress={() => {
-              navigation.navigate('ChatsStackScreen', { screen: 'ChatsScreen', params: {userId}})
-            }}
-          />
+            <DrawerItem
+              label='Chat'
+              icon={() => <Icon name='comments-o' size={30} color='black' style={styles.icon} />}
+              onPress={() => navigation.navigate('ChatsStackScreen', { screen: 'ChatsScreen', params: {userId}})}
+            />
             <DrawerItem
               label="Perfil"
-              icon={() => (
-                <Icon name="user" size={30} color="black" style={styles.icon} />
-              )}
-              onPress={() => {}}
+              icon={() => <Icon name="user" size={30} color="black" style={styles.icon} />}
+              onPress={() => { }}
             />
             <DrawerItem
               label="Agregar Mascota"
-              icon={() => (
-                <Icon
-                  name="plus-circle"
-                  size={30}
-                  color="black"
-                  style={styles.icon}
-                />
-              )}
-              onPress={() => {
-                navigation.navigate('NewPet');
-              }}
+              onPress={() => navigation.navigate('NewPetScreen')}
+              icon={() => <Icon name="plus-circle" size={30} color="black" style={styles.icon} />}
             />
             <View style={styles.divisorLine} />
             <DrawerItem
               label="Desconectarse"
               style={styles.signOut}
-              icon={() => (
-                <Icon
-                  name="sign-out"
-                  size={30}
-                  style={styles.icon}
-                  color="black"
-                />
-              )}
-              onPress={() => logout(navigation)}
+              icon={() => <Icon name="sign-out" size={30} style={styles.icon} color="black" />}
+              onPress={() => setModalVisible(true)}
+
             />
           </>
         )}
       </DrawerContentScrollView>
+      <AppModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        questionText='Estas seguro que deseas cerrar tu Sesión?'
+        functionToCallBack={logout}
+        extraParams={navigation}
+      />
     </View>
   );
 }

@@ -1,20 +1,21 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
-import HeaderButton from '../components/Buttons';
-
-import NewPet from '../Screens/NewPet';
+import HeaderButton from '../../components/Buttons';
+import ChatScreen from '../../Screens/Chat';
+import ChatsScreen from '../../Screens/Chats';
 
 const Stack = createStackNavigator();
 
-const NewPetStack = ({navigation}) => (
+const ChatStackScreen = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="NewPet"
-      component={NewPet}
+      name='ChatsScreen'
+      component={ChatsScreen}
+      unmountOnBlur={true}
+      options={{unmountOnBlur: true}}
       options={{
-        headerTitle: 'Nueva Mascota',
-        headerTitleAlign:"center",
+        headerTitle: 'Conversaciones',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
@@ -23,10 +24,17 @@ const NewPetStack = ({navigation}) => (
               onPress={() => navigation.toggleDrawer()}
             />
           </HeaderButtons>
-        )
+        ),
+      }}
+    />
+    <Stack.Screen
+      name='ChatScreen'
+      component={ChatScreen}
+      options={{
+        headerTitle: 'Chatea para adoptar una mascota',
       }}
     />
   </Stack.Navigator>
 );
 
-export default NewPetStack;
+export default ChatStackScreen;

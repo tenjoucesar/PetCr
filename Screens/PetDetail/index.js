@@ -4,7 +4,7 @@ import { DetailText } from '../../components/Text';
 import { MainButton } from '../../components/Buttons';
 import {AuthContext} from '../../Providers/AuthProvider';
 import {ChatContext} from '../../Providers/ChatProvider';
-import PetDetailsModal from './modal';
+import AppModal from '../../components/AppModal';
 
 const PetDetailsScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,8 +13,6 @@ const PetDetailsScreen = ({ route, navigation }) => {
   const petDetailsObj = route.params.params.item;
 
   const chatWithPetOwner = (owner) => {
-    debugger;
-    setModalVisible(!modalVisible)
     const sender = {
       name: user.displayName,
       senderId: user.uid,
@@ -36,13 +34,14 @@ const PetDetailsScreen = ({ route, navigation }) => {
   } = petDetailsObj;
   return (
     <ScrollView>
-    <PetDetailsModal
+    <AppModal
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
-      chatWithPetOwner={chatWithPetOwner}
-      owner={owner}
+      questionText='Estas seguro que deseas empezar una conversacion con la casa cuna de esta mascota?'
+      functionToCallBack={chatWithPetOwner}
+      extraParams={owner}
     />
-      <Image source={{ uri: img }} style={styles.image} />
+      <Image source={{ uri: img }} style={styles.image} resizeMode='contain' />
       <View style={styles.container}>
         <View style={styles.breedContainer}>
           <View style={styles.breedTextContainer}>
@@ -66,8 +65,9 @@ export default PetDetailsScreen;
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: 450,
+    minWidth: '100%',
+    minHeight: 400,
+    justifyContent: "center"
   },
   container: {
     margin: 15,
