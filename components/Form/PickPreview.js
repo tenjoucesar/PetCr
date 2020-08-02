@@ -57,7 +57,7 @@ const PickPreview = ({img, addPick}) => {
   return (
     <TouchableOpacity onPress={onHandlePress} style={styles.container}>
       {img ? (
-        <Image style={styles.img} source={{uri: img}} />
+        <Image style={styles.img} source={{uri: img}}  resizeMode='contain'/>
       ) : (
         <Icon name="camera" size={25} />
       )}
