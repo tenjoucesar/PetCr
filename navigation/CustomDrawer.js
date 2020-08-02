@@ -1,10 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import AppModal from '../components/AppModal';
 import { AuthContext } from '../Providers/AuthProvider';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function CustomDrawerContent({navigation, user}) {
+  const [modalVisible, setModalVisible] = useState(false);
   const {logout} = useContext(AuthContext);
   const userId = user && user.uid;
 
@@ -75,11 +78,19 @@ function CustomDrawerContent({navigation, user}) {
               label="Desconectarse"
               style={styles.signOut}
               icon={() => <Icon name="sign-out" size={30} style={styles.icon} color="black" />}
-              onPress={() => logout(navigation)}
+              onPress={() => setModalVisible(true)}
+
             />
           </>
         )}
       </DrawerContentScrollView>
+      <AppModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        questionText='Estas seguro que deseas cerrar tu Sesión?'
+        functionToCallBack={logout}
+        extraParams={navigation}
+      />
     </View>
   );
 }

@@ -14,32 +14,32 @@ function DesiredLocationQuestionScreen ({ navigation, route }) {
     handlePetsRequest(province, desiredPet);
     navigation.navigate('PetsStackScreen');
   }
+
   return (
-      <View style={styles.componentContainer}>
+    <View style={styles.componentContainer}>
       <Text style={styles.tittle}>
         Estas buscandolo a tu amigo en alguna provincia?
-    </Text>
+      </Text>
       <DropDownPicker
         items={provincias}
         placeholder='Selecciona una provincia'
         containerStyle={styles.dropdownContainer}
         style={{ backgroundColor: '#fafafa' }}
-        itemStyle={{justifyContent: 'center'}}
+        itemStyle={{ justifyContent: 'center' }}
         dropDownStyle={{ backgroundColor: '#fafafa' }}
         onChangeItem={item => setProvince(item)}
-        />
+      />
       <View style={styles.btnContainer}>
         <MainButton disabled={!province} onPress={() => onProvinceSelect(province, desiredPet)}>
           continuar
         </MainButton>
       </View>
       <View style={styles.btnContainer}>
-        <Button title='No estoy seguro' onPress={() => onProvinceSelect(province, desiredPet)}/>
+        <Button title='No estoy seguro' onPress={() => onProvinceSelect(province, desiredPet)} />
       </View>
     </View>
   )
 }
-
 
 export default DesiredLocationQuestionScreen;
 
