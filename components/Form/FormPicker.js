@@ -24,6 +24,7 @@ export default function FormPicker({
   const [visible, setVisible] = useState(false);
 
   const getValue = () => {
+    debugger;
     const item = items.find(i => i.value === value);
     return item.label;
   };
