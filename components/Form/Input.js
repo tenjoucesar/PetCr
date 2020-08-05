@@ -17,7 +17,13 @@ const Input = ({label, errorMessage, onChange, name, ...rest}) => (
 const styles = StyleSheet.create({
   container: {marginVertical: 10},
   icon: {marginRight: 10},
-  input: {borderBottomColor: '#ccc', borderBottomWidth: 1, flex: 1, padding: 0, color: 'black'},
+  input: {
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    flex: 1,
+    padding: 0,
+    color: 'black',
+  },
 });
 
 export default Input;

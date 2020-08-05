@@ -12,16 +12,19 @@ import {
   SpeciePickerItem,
   Switch,
 } from '../../components/Form';
+import Dropdown from '../../components/Form/Dropdown';
 import LoadingScreen from '../../Screens/LoadingScreen';
 import species from './species';
+import provinces from './provinces';
 import useForm from '../../hooks/useForm';
 
 const validation = values => {
   const errors = {};
-  const {name, specie, img, yearOfBirth} = values;
+  const {name, specie, img, province} = values;
   if (name.trim() === '') errors.name = 'El nombre es obligatorio';
   if (!specie) errors.specie = 'Seleccione la Especie';
   if (!img) errors.img = errors.img = 'Selecciona una imagen';
+  if (!province) errors.province = 'Selecciona una provincia';
   return errors;
 };
 
@@ -31,6 +34,7 @@ const initialState = {
   gender: 'male',
   img: '',
   name: '',
+  province: '',
   specie: '',
   yearOfBirth: '',
 };
@@ -53,8 +57,8 @@ export default function NewPetScreen({navigation}) {
           ownerId: user.uid,
           name: user.displayName,
           photoURL: user.photoURL,
-        }
-      }
+        },
+      };
       await firestore()
         .collection('pets')
         .add(postValues);
@@ -73,7 +77,15 @@ export default function NewPetScreen({navigation}) {
     savePet,
   );
 
-  const {name, description, specie, yearOfBirth, gender, img} = values;
+  const {
+    name,
+    description,
+    specie,
+    yearOfBirth,
+    gender,
+    img,
+    province,
+  } = values;
 
   if (loading) return <LoadingScreen />;
 
@@ -106,6 +118,12 @@ export default function NewPetScreen({navigation}) {
         onChange={onChange}
         value={yearOfBirth}
         keyboardType="number-pad"
+      />
+      <Dropdown
+        items={provinces}
+        value={province}
+        onChange={onChange}
+        name="province"
       />
       <FormPicker
         items={species}

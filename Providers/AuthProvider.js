@@ -64,19 +64,23 @@ export const AuthProvider = ({children}) => {
         setUser,
         initializing,
         setInitializing,
-        facebookLogin: () => {
+        facebookLogin:async () => {
           try {
+
+            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
             setInitializing(true);
             LoginManager.logInWithPermissions(['public_profile','email']).then(result => {
               if (result.isCancelled) {
                 setInitializing(false);
               }
               AccessToken.getCurrentAccessToken().then(data => {
+               
                 const facebookCredential = auth.FacebookAuthProvider.credential(
                   data.accessToken,
                 );
                 return auth().signInWithCredential(facebookCredential);
               })
+            
             })
           } catch (e) {
             console.error(e);
