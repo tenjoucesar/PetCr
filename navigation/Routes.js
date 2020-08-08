@@ -8,8 +8,10 @@ import ChatStackScreen from './Stacks/ChatStack';
 import ProfileStackScreen from './Stacks/ProfileStack';
 import RescuersStackScreen from './Stacks/RescuersStack';
 import CustomDrawerContent from './CustomDrawer';
+
 import NewPetStack from './Stacks/NewPetStack';
 import HomeScreenStack from './Stacks/HomeScreenStack';
+import ContactStack from './Stacks/ContactStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,11 +27,12 @@ export default function Routes() {
         <Drawer.Screen name='PetsStackScreen' component={PetsStackScreen} />
         <Drawer.Screen name='LoginScreen' component={LoginStackScreen} />
         <Drawer.Screen name='AdoptedScreen' component={AdoptedStackScreen} />
-        <Drawer.Screen name='Profile' component={ProfileStackScreen}/>
+        <Drawer.Screen name='ProfileScreen' component={ProfileStackScreen}/>
         <Drawer.Screen name='RescuersScreen' component={RescuersStackScreen}/>
         {/* If use logout we unmount the component so we reload new chats if needed. */}
         <Drawer.Screen name='ChatsStackScreen' unmountOnBlur={true} options={{unmountOnBlur: true}} component={ChatStackScreen} />
         <Drawer.Screen name='NewPetScreen' component={NewPetStack} />
+        <Drawer.Screen name="ContactScreen" component={ContactStack} />
       </Drawer.Navigator>
   );
 }

@@ -1,19 +1,18 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {Item, HeaderButtons} from 'react-navigation-header-buttons';
+import Contact from '../../Screens/Contact';
 import HeaderButton from '../../components/Buttons';
-import ProfileScreen from '../../Screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
-const ProfileStackScreen = ({navigation}) => (
+const RescuersStackScreen = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="ProfileScreen"
-      component={ProfileScreen}
+      name="ContactScreen"
+      component={Contact}
       options={{
-        headerTitle: 'Mi Perfil',
+        headerTitle: 'Contacto',
         headerTitleAlign: 'center',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -29,4 +28,4 @@ const ProfileStackScreen = ({navigation}) => (
   </Stack.Navigator>
 );
 
-export default ProfileStackScreen;
+export default RescuersStackScreen;

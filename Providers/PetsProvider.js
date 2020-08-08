@@ -1,24 +1,35 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {createContext, useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 export const PetContext = createContext({});
 
-export const PetsProvider = ({ children }) => {
-  const [pets, setPets ] = useState(null);
+export const PetsProvider = ({children}) => {
+  const [pets, setPets] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const handlePetsRequest = (province, desiredPet) =>  {
+  const handlePetsRequest = (province, desiredPet) => {
     // Missing to create a request based   on  this values, since we are missing more pets i'm going to create a ticket
 
     const petsDB = firestore().collection('pets');
     return petsDB.onSnapshot(querySnapshot => {
       const petsCollection = [];
       querySnapshot.forEach(doc => {
-        const { name, img, gender, description, specie, yearOfBirth, adopted, owner, } = doc.data();
+        const {
+          name,
+          province,
+          images,
+          gender,
+          description,
+          specie,
+          yearOfBirth,
+          adopted,
+          owner,
+        } = doc.data();
         petsCollection.push({
           id: doc.id,
           name,
-          img,
+          province,
+          images,
           gender,
           description,
           specie,
@@ -32,12 +43,11 @@ export const PetsProvider = ({ children }) => {
         setLoading(false);
       }
     });
-  }
+  };
 
   useEffect(() => {
-
     return handlePetsRequest();
-  }, [])
+  }, []);
 
   async function AddNewPet() {
     await petsDB.add({
@@ -51,9 +61,8 @@ export const PetsProvider = ({ children }) => {
         pets,
         setPets,
         AddNewPet,
-        handlePetsRequest
-      }}
-    >
+        handlePetsRequest,
+      }}>
       {children}
     </PetContext.Provider>
   );

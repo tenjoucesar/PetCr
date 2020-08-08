@@ -26,6 +26,7 @@ DerivedData
 build/
 .idea
 .gradle
+java_pid18084.hprof
 local.properties
 *.iml
 
