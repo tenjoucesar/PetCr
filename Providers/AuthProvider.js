@@ -18,10 +18,10 @@ export const AuthProvider = ({children}) => {
       clearTimeout(debounceTimeout);
     }
 
-    debounceTimeout = setTimeout(() =>{
-        debounceTimeout = null;
+    debounceTimeout = setTimeout(() => {
+      debounceTimeout = null;
 
-        handleAuthStateChanged(user);
+      handleAuthStateChanged(user);
     }, DebounceDueTime);
   }
 
@@ -51,10 +51,12 @@ export const AuthProvider = ({children}) => {
   }
 
   function isNewUser(user) {
-    const userRef = firestore().collection('users').doc(user.uid);
-    userRef.get().then( doc => {
+    const userRef = firestore()
+      .collection('users')
+      .doc(user.uid);
+    userRef.get().then(doc => {
       !doc.exists ? addNewUser(user) : setInitializing(false);
-    })
+    });
   }
 
   return (
@@ -67,17 +69,19 @@ export const AuthProvider = ({children}) => {
         facebookLogin: () => {
           try {
             setInitializing(true);
-            LoginManager.logInWithPermissions(['public_profile','email']).then(result => {
-              if (result.isCancelled) {
-                setInitializing(false);
-              }
-              AccessToken.getCurrentAccessToken().then(data => {
-                const facebookCredential = auth.FacebookAuthProvider.credential(
-                  data.accessToken,
-                );
-                return auth().signInWithCredential(facebookCredential);
-              })
-            })
+            LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+              result => {
+                if (result.isCancelled) {
+                  setInitializing(false);
+                }
+                AccessToken.getCurrentAccessToken().then(data => {
+                  const facebookCredential = auth.FacebookAuthProvider.credential(
+                    data.accessToken,
+                  );
+                  return auth().signInWithCredential(facebookCredential);
+                });
+              },
+            );
           } catch (e) {
             console.error(e);
           }
@@ -85,43 +89,52 @@ export const AuthProvider = ({children}) => {
         googleLogin: () => {
           try {
             setInitializing(true);
-            GoogleSignin.signIn().then((data) => {
-              const googleCredential = auth.GoogleAuthProvider.credential(data.idToken);
-              return auth().signInWithCredential(googleCredential);
-            }).catch(error => {
-              setInitializing(false);
-            })
+            GoogleSignin.signIn()
+              .then(data => {
+                const googleCredential = auth.GoogleAuthProvider.credential(
+                  data.idToken,
+                );
+                return auth().signInWithCredential(googleCredential);
+              })
+              .catch(error => {
+                setInitializing(false);
+              });
           } catch (e) {
             console.error(e);
           }
         },
-        logout: async (navigation) => {
+        logout: async navigation => {
           try {
-            await auth().signOut().then(navigation.navigate('PetsStackScreen'))
+            await auth()
+              .signOut()
+              .then(navigation.navigate('PetsStackScreen'));
           } catch (e) {
             console.error(e);
           }
         },
-        emailAndPassLogin:  () => {
+        emailAndPassLogin: () => {
           debugger;
           auth()
-          .signInWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-          // .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-          .then(() => {
-            console.log('User account created & signed in!');
-          })
-          .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-              console.log('That email address is already in use!');
-            }
+            .signInWithEmailAndPassword(
+              'jane.doe@example.com',
+              'SuperSecretPassword!',
+            )
+            // .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
+            .then(() => {
+              console.log('User account created & signed in!');
+            })
+            .catch(error => {
+              if (error.code === 'auth/email-already-in-use') {
+                console.log('That email address is already in use!');
+              }
 
-            if (error.code === 'auth/invalid-email') {
-              console.log('That email address is invalid!');
-            }
+              if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+              }
 
-            console.error(error);
-          });
-        }
+              console.error(error);
+            });
+        },
       }}>
       {children}
     </AuthContext.Provider>

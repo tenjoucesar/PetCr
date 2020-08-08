@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {ScrollView, StyleSheet, Alert} from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
@@ -14,14 +15,16 @@ import {
 } from '../../components/Form';
 import LoadingScreen from '../../Screens/LoadingScreen';
 import species from './species';
+import provinces from '../HomeScreen/DesiredLocation/provincias';
 import useForm from '../../hooks/useForm';
 
 const validation = values => {
   const errors = {};
-  const {name, specie, img, yearOfBirth} = values;
-  if (name.trim() === '') errors.name = 'El nombre es obligatorio';
+  const {name, specie, images, province} = values;
+  if (!name.trim()) errors.name = 'El nombre es obligatorio';
   if (!specie) errors.specie = 'Seleccione la Especie';
-  if (!img) errors.img = errors.img = 'Selecciona una imagen';
+  if (!images.length) errors.images = 'Selecciona una imagen';
+  if (!province) errors.province = 'Selecciona una provincia';
   return errors;
 };
 
@@ -29,8 +32,9 @@ const initialState = {
   adopted: false,
   description: '',
   gender: 'male',
-  img: '',
+  images: [],
   name: '',
+  province: null,
   specie: '',
   yearOfBirth: '',
 };
@@ -42,22 +46,27 @@ export default function NewPetScreen({navigation}) {
   const savePet = async () => {
     try {
       setLoading(true);
-      const path = `pets/${name}${Date.now()}.jpeg`;
-      const storageRef = storage().ref(path);
-      await storageRef.putFile(img);
-      const imgPath = await storageRef.getDownloadURL();
-      const postValues = {
+      const storeRef = [];
+      images.forEach((img, i) => {
+        storeRef.push(storage().ref(`pets/${name}${i}${Date.now()}.jpeg`));
+      });
+      await Promise.all(storeRef.map((ref, i) => ref.putFile(images[i])));
+      const imgPath = await Promise.all(
+        storeRef.map(ref => ref.getDownloadURL()),
+      );
+
+      const pet = {
         ...values,
-        img: imgPath,
+        images: imgPath,
         owner: {
           ownerId: user.uid,
           name: user.displayName,
           photoURL: user.photoURL,
-        }
-      }
+        },
+      };
       await firestore()
         .collection('pets')
-        .add(postValues);
+        .add(pet);
       navigation.navigate('PetsScreen');
       setLoading(false);
     } catch (error) {
@@ -73,7 +82,7 @@ export default function NewPetScreen({navigation}) {
     savePet,
   );
 
-  const {name, description, specie, yearOfBirth, gender, img} = values;
+  const {name, description, specie, yearOfBirth, gender, images} = values;
 
   if (loading) return <LoadingScreen />;
 
@@ -81,13 +90,20 @@ export default function NewPetScreen({navigation}) {
     <ScrollView style={styles.container}>
       <ImagePicker
         onChange={onChange}
-        name="img"
-        value={img}
-        errorMessage={errors.img}
+        name="images"
+        images={images}
+        errorMessage={errors.images}
+      />
+      <DropDownPicker
+        items={provinces}
+        placeholder="Selecciona una provincia"
+        style={styles.dropdownContainer}
+        onChangeItem={item => onChange(item.value, 'province')}
       />
       <Input
         label="Nombre"
         name="name"
+        placeholder="Ingresa el Nombre"
         onChange={onChange}
         value={name}
         errorMessage={errors.name}
@@ -95,6 +111,7 @@ export default function NewPetScreen({navigation}) {
       <Input
         label="Descripcion"
         name="description"
+        placeholder="Ingresa la descripción"
         onChange={onChange}
         value={description}
         multiline
@@ -102,6 +119,7 @@ export default function NewPetScreen({navigation}) {
       <Input
         label="Año de Nacimiento"
         errorMessage={errors.yearOfBirth}
+        placeholder="Ingresa la fecha de nacimiento"
         name="yearOfBirth"
         onChange={onChange}
         value={yearOfBirth}
@@ -131,7 +149,15 @@ export default function NewPetScreen({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     paddingHorizontal: 30,
     paddingVertical: 10,
+  },
+  dropdownContainer: {
+    width: '100%',
+    height: 60,
+    paddingHorizontal: 0,
+    backgroundColor: 'white',
+    borderWidth: 0,
   },
 });

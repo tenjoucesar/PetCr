@@ -1,20 +1,27 @@
 import React from 'react';
-import {View, StyleSheet, Image, ImageBackground, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import CostaRicaFlag from '../../images/costa-rica-flag.png';
 import Loading from '../../components/Loading';
 
-const PetGrid = ({img, name, onSelect}) => (
+const PetGrid = ({img, name, onSelect, province}) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={onSelect}>
       <ImageBackground
-      source={{uri: img}}
-      style={styles.bgImage}
-      resizeMode='cover'
-      loadingIndicatorSource={() => <Loading />}
-       >
+        source={{uri: img}}
+        style={styles.bgImage}
+        resizeMode="cover"
+        loadingIndicatorSource={() => <Loading />}>
         <View style={{display: 'flex', flexDirection: 'row', margin: 5}}>
-          <Image source={CostaRicaFlag}/>
-          <Text style={styles.province}>Alajuela</Text>
+          <Image source={CostaRicaFlag} />
+          <Text style={styles.province}>{province}</Text>
         </View>
         <Text style={styles.name}>{name}</Text>
       </ImageBackground>
@@ -47,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     paddingLeft: 10,
-  }
+  },
 });
 
 export default PetGrid;

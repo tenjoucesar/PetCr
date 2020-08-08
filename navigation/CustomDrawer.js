@@ -66,13 +66,19 @@ function CustomDrawerContent({navigation, user}) {
             <DrawerItem
               label="Perfil"
               icon={() => <Icon name="user" size={30} color="black" style={styles.icon} />}
-              onPress={() => { }}
+              onPress={() => navigation.navigate('ProfileScreen')}
             />
+
             <DrawerItem
               label="Agregar Mascota"
-              onPress={() => navigation.navigate('NewPetScreen')}
               icon={() => <Icon name="plus-circle" size={30} color="black" style={styles.icon} />}
+              onPress={() => navigation.navigate('NewPetScreen')}
             />
+            <DrawerItem
+              label="Contactenos"
+              icon={() => ( <Icon name="user-circle" size={30}  color="black" style={styles.icon} /> )}
+              onPress={() => navigation.navigate('ContactScreen')} 
+            /> 
             <View style={styles.divisorLine} />
             <DrawerItem
               label="Desconectarse"
