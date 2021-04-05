@@ -1,17 +1,18 @@
-import React, {useContext, useState} from 'react';
-import {View, Text, ScrollView, Image, StyleSheet} from 'react-native';
-import {DetailText} from '../../components/Text';
-import {MainButton} from '../../components/Buttons';
-import {AuthContext} from '../../Providers/AuthProvider';
-import {ChatContext} from '../../Providers/ChatProvider';
-import AppModal from '../../components/AppModal';
+import React, { useContext, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 
-import ImageList from '../../components/ImageList';
+import ImageList from 'Components/ImageList';
+import AppModal from 'Components/AppModal';
+import { DetailText } from 'Components/Text';
+import { MainButton } from 'Components/Buttons';
+import { AuthContext } from 'Providers/AuthProvider';
+import { ChatContext } from 'Providers/ChatProvider';
 
-const PetDetailsScreen = ({route, navigation}) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const {generateNewChat} = useContext(ChatContext);
-  const {user} = useContext(AuthContext);
+
+const PetDetailsScreen = ({ route, navigation }) => {
+  const [modalVisible, setModalVisible] = useState( false );
+  const { generateNewChat } = useContext( ChatContext );
+  const { user } = useContext( AuthContext );
   const petDetailsObj = route.params.params.item;
 
   const chatWithPetOwner = owner => {
@@ -20,7 +21,7 @@ const PetDetailsScreen = ({route, navigation}) => {
       senderId: user.uid,
       photoURL: user.photoURL,
     };
-    generateNewChat(owner, sender, navigation);
+    generateNewChat( owner, sender, navigation );
   };
 
   const {
@@ -89,10 +90,5 @@ const styles = StyleSheet.create({
     color: 'green',
     fontSize: 20,
     textTransform: 'uppercase',
-  },
-  details: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
   },
 });

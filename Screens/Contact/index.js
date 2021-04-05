@@ -24,6 +24,12 @@ const index = () => {
 export default index;
 
 const styles = StyleSheet.create({
-  container: {paddingVertical: 40, paddingHorizontal: 20},
-  message: {fontSize: 16, textAlign: 'center'},
+  container: {
+    paddingVertical: 40,
+    paddingHorizontal: 20
+  },
+  message: {
+    fontSize: 16,
+    textAlign: 'center'
+  },
 });

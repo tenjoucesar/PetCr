@@ -1,14 +1,16 @@
-import React, {useState, useContext} from 'react';
-import {FlatList, View, StyleSheet} from 'react-native';
-import PetGrid from '../../components/Grid/PetGrid';
-import Loading from '../../components/Loading';
-import {PetContext} from '../../Providers/PetsProvider';
-import Tab from '../../components/Tabs/Tab';
-import {TAB_KEYS} from '../../components/Tabs/constants';
+import React, { useState, useContext } from 'react';
+import { FlatList, View, StyleSheet } from 'react-native';
 
-function PetsScreen({navigation}) {
+import { PetContext } from 'Providers/PetsProvider';
+
+import PetGrid from 'Components/Grid/PetGrid';
+import Loading from 'Components/Loading';
+import Tab from 'Components/Tabs/Tab';
+import { TAB_KEYS } from 'Components/Tabs/constants';
+
+function PetsScreen({ navigation }) {
   const [activeTab, setActiveTab] = useState(TAB_KEYS[0]);
-  const {pets, loading} = useContext(PetContext);
+  const { pets, loading } = useContext(PetContext);
 
   const tabItem = TAB_KEYS.map(tab => (
     <Tab

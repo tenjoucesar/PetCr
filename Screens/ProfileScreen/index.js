@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-
-import {AuthContext} from '../../Providers/AuthProvider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import colors from '../../constants/colors';
+
+import colors from 'Constants/colors';
+import { AuthContext } from 'Providers/AuthProvider';
 
 const index = () => {
   const {
-    user: {email, photoURL, displayName},
+    user: { email, photoURL, displayName }
   } = useContext(AuthContext);
 
   return (
@@ -58,14 +58,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.primary,
   },
-  details: {paddingTop: 20},
+  details: {
+    paddingTop: 20
+  },
   detailContainer: {
     paddingVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  icon: {paddingHorizontal: 20},
-  text: {fontSize: 16},
+  icon: {
+    paddingHorizontal: 20
+  },
+  text: {
+    fontSize: 16
+  },
 });
 
 export default index;
