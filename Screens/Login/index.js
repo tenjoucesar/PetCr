@@ -1,34 +1,36 @@
-import React, {useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Button, Image} from 'react-native';
-import GoogleSignInButton from '../../components/LoginButtons/GoogleSigninButton';
-import FacebookSignInButton from '../../components/LoginButtons/FacebookSigninButton';
-import {AuthContext} from '../../Providers/AuthProvider';
-import Loading from '../../components/Loading';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Image } from 'react-native';
+
+import { AuthContext } from 'Providers/AuthProvider';
+
+import Loading from 'Components/Loading';
+import GoogleSignInButton from 'Components/LoginButtons/GoogleSigninButton';
+import FacebookSignInButton from 'Components/LoginButtons/FacebookSigninButton';
 
 function Login({navigation}) {
-  const {user, logout, initializing, emailAndPassLogin} = useContext(AuthContext);
+  const {
+    user, logout, initializing, emailAndPassLogin
+  } = useContext( AuthContext );
 
-  if (initializing) {
-    return <Loading />;
-  }
+  if (initializing) return <Loading />;
 
   if (!user) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          Inicia Sesion con alguno de los siguientes metodos
+          Inicia Sesión
         </Text>
         <FacebookSignInButton />
         <GoogleSignInButton />
-        <Button onPress={() => emailAndPassLogin()} title='lOGUEATE CON TU CORREO  Y CONTRASE;A' />
+        {/* <Button onPress={() => emailAndPassLogin()} title='lOGUEATE CON TU CORREO  Y CONTRASE;A' /> */}
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {user.email}</Text>
+      <Text style={styles.title}>Hola! {user.displayName}</Text>
       <Image source={user.photoURL && user.photoURL.length!=0?{uri: user.photoURL}:null} style={styles.imageProfile} />
       <Button title="Desconectarse" onPress={() => logout(navigation)} />
     </View>
@@ -51,9 +53,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imageProfile: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     borderRadius: 50,
-    marginVertical: 5,
+    marginVertical: 15,
   },
 });

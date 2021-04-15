@@ -1,15 +1,17 @@
 import React from 'react';
 import {
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
   Text,
+  View,
+  Dimensions,
+  StyleSheet,
+  ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
-import CostaRicaFlag from '../../images/costa-rica-flag.png';
-import Loading from '../../components/Loading';
+
+import Loading from 'Components/Loading';
+import CostaRicaFlag from 'Components/CostaRicaFlag';
+
+const containerWidth = Dimensions.get('window').width / 3 - 20;
 
 const PetGrid = ({img, name, onSelect, province}) => (
   <View style={styles.container}>
@@ -18,28 +20,27 @@ const PetGrid = ({img, name, onSelect, province}) => (
         source={{uri: img}}
         style={styles.bgImage}
         resizeMode="cover"
-        loadingIndicatorSource={() => <Loading />}>
-        <View style={{display: 'flex', flexDirection: 'row', margin: 5}}>
-          <Image source={CostaRicaFlag} />
-          <Text style={styles.province}>{province}</Text>
-        </View>
+        loadingIndicatorSource={() => <Loading />}
+        >
+        <CostaRicaFlag province={province} />
         <Text style={styles.name}>{name}</Text>
       </ImageBackground>
     </TouchableOpacity>
   </View>
 );
 
+export default PetGrid;
+
 const styles = StyleSheet.create({
   container: {
     height: 150,
-    flex: 1,
+    width: containerWidth,
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 15,
     overflow: 'hidden',
   },
   bgImage: {
-    width: '100%',
     height: 150,
     justifyContent: 'flex-end',
   },
@@ -49,12 +50,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingLeft: 5,
   },
-  province: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-    paddingLeft: 10,
-  },
 });
-
-export default PetGrid;

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import AppModal from '../components/AppModal';
-import { AuthContext } from '../Providers/AuthProvider';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AppModal from 'Components/AppModal';
+import { AuthContext } from 'Providers/AuthProvider';
+
 
 function CustomDrawerContent({navigation, user}) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,13 +21,14 @@ function CustomDrawerContent({navigation, user}) {
           <>
             <View style={styles.userInfoContainer}>
               <Image
-                // source={user.photoURL && user.photoURL.length!=0?{uri: user.photoURL}:null}
                 source={{uri: user.photoURL}}
                 style={styles.imageProfile}
               />
               <View style={styles.userDataContainer}>
                 <Text style={styles.userName}>{user.displayName}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ProfileScreen')}
+                >
                   <Text style={styles.goToAccount}>Ver Cuenta</Text>
                 </TouchableOpacity>
               </View>
@@ -77,8 +79,8 @@ function CustomDrawerContent({navigation, user}) {
             <DrawerItem
               label="Contactenos"
               icon={() => ( <Icon name="user-circle" size={30}  color="black" style={styles.icon} /> )}
-              onPress={() => navigation.navigate('ContactScreen')} 
-            /> 
+              onPress={() => navigation.navigate('ContactScreen')}
+            />
             <View style={styles.divisorLine} />
             <DrawerItem
               label="Desconectarse"

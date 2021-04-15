@@ -5,7 +5,7 @@ function RescuersScreen() {
 
   return (
     <View style={{flex: 1}}>
-      <Text>Hola soy la pantalla de rescatadores weon hijueputa</Text>
+      {/* <Text>Hola soy la pantalla de rescatadores weon hijueputa</Text> */}
     </View>
   )
 }

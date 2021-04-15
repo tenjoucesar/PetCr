@@ -14,7 +14,7 @@ const index = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.message}>
-        Pueden ponerse en contacto con nosotros para donativos y para cualquier
+        Pueden ponerse en contacto con los desarrolladores de la App para donativos o cualquier
         consulta relacionada con la app y con nuestro servicios.
       </Text>
     </ScrollView>
