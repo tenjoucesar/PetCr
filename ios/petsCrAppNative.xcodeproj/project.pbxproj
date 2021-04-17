@@ -21,7 +21,7 @@
 		C63DEAEDC9AA527B2DEDC28B /* libPods-petsCrAppNative-petsCrAppNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC29482336111019C1F9440 /* libPods-petsCrAppNative-petsCrAppNativeTests.a */; };
 		CA33408424B5285B007DF864 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA33408324B5285B007DF864 /* GoogleService-Info.plist */; };
 		CA33408B24B566F0007DF864 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA33408724B566EE007DF864 /* Bolts.framework */; };
-		CADB48F225EDF281001D0528 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB48F125EDF281001D0528 /* File.swift */; };
+		CAAFD469262A5477008A38A8 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAAFD468262A5477008A38A8 /* File.swift */; };
 		DFDEDD5CE887A636F12CCC1D /* libPods-petsCrAppNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3623CD6818921500DCA009 /* libPods-petsCrAppNative.a */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +68,8 @@
 		AFD22A18BEBB569232044C0A /* Pods-petsCrAppNative-tvOS-petsCrAppNative-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petsCrAppNative-tvOS-petsCrAppNative-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-petsCrAppNative-tvOS-petsCrAppNative-tvOSTests/Pods-petsCrAppNative-tvOS-petsCrAppNative-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA33408324B5285B007DF864 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA33408724B566EE007DF864 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		CAAFD468262A5477008A38A8 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CADB48F025EDF281001D0528 /* petsCrAppNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "petsCrAppNative-Bridging-Header.h"; sourceTree = "<group>"; };
-		CADB48F125EDF281001D0528 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E4E6675DC09ADE74E58DBF1C /* Pods-petsCrAppNative-petsCrAppNativeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petsCrAppNative-petsCrAppNativeTests.debug.xcconfig"; path = "Target Support Files/Pods-petsCrAppNative-petsCrAppNativeTests/Pods-petsCrAppNative-petsCrAppNativeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBC29482336111019C1F9440 /* libPods-petsCrAppNative-petsCrAppNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-petsCrAppNative-petsCrAppNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -186,7 +186,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				CADB48F125EDF281001D0528 /* File.swift */,
+				CAAFD468262A5477008A38A8 /* File.swift */,
 				CA33408724B566EE007DF864 /* Bolts.framework */,
 				CA33408324B5285B007DF864 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* petsCrAppNative */,
@@ -711,7 +711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				CADB48F225EDF281001D0528 /* File.swift in Sources */,
+				CAAFD469262A5477008A38A8 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

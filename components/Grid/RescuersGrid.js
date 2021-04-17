@@ -1,24 +1,24 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const AdoptedGrid = ({ name, protective, img, onSelect }) => {
-  return(
+const RescuersGrid = ({ name, protective, img, onSelect }) => (
   <View style={styles.container}>
     <Image style={styles.image} source={{ uri: img }} />
     <View style={styles.details}>
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.text}>{protective}</Text>
     </View>
-    {/* <TouchableOpacity style={styles.buttonContainer} onPress={onSelect}>
+    <TouchableOpacity style={styles.buttonContainer} onPress={onSelect}>
       <Text>
+        Ver todas las mascotas
         <Icon name="play" size={32} color="gray" />
       </Text>
-    </TouchableOpacity> */}
+    </TouchableOpacity>
   </View>
-)};
+);
 
-export default AdoptedGrid;
+export default RescuersGrid;
 
 const styles = StyleSheet.create({
   container: {

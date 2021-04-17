@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { Item, HeaderButtons } from "react-navigation-header-buttons";
-import HeaderButton from '../../components/Buttons';
-import PetsScreen from '../../Screens/Pets';
-import PetDetailsScreen from '../../Screens/PetDetail';
+import HeaderButton from 'Components/Buttons';
+import PetsScreen from 'Screens/Pets';
+import PetDetailsScreen from 'Screens/PetDetail';
 
 const Stack = createStackNavigator();
 
@@ -23,19 +23,17 @@ const PetsStackScreen = ({navigation}) => (
             />
           </HeaderButtons>
         ),
-        headerRight: () => (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item title="Search" iconName="search" onPress={() => ''} />
-          </HeaderButtons>
-        ),
+        // headerRight: () => (
+        //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        //     <Item title="Search" iconName="search" onPress={() => ''} />
+        //   </HeaderButtons>
+        // ),
       }}
     />
     <Stack.Screen
       name="PetDetails"
       component={PetDetailsScreen}
-      options={{
-        headerTitle: 'name',
-      }}
+      options={({ route }) => ({ title: route.params.pet.name })}
     />
   </Stack.Navigator>
 );

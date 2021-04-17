@@ -21,7 +21,7 @@ const PetGrid = ({img, name, onSelect, province}) => (
         style={styles.bgImage}
         resizeMode="cover"
         loadingIndicatorSource={() => <Loading />}
-        >
+      >
         <CostaRicaFlag province={province} />
         <Text style={styles.name}>{name}</Text>
       </ImageBackground>

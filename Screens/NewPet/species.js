@@ -1,13 +1,13 @@
 export default [
   {
     label: 'Gato',
-    value: 'cat',
+    value: 'gato',
     backgroundColor: 'blue',
     icon: 'cat',
   },
   {
     label: 'Perro',
-    value: 'dog',
+    value: 'perro',
     backgroundColor: 'green',
     icon: 'dog',
   },

@@ -1,21 +1,20 @@
-import React, {useContext} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import colors from 'Constants/colors';
 import { AuthContext } from 'Providers/AuthProvider';
 
-const index = () => {
+const index = ({ navigation }) => {
   const {
-    user: { email, photoURL, displayName }
+    user, logout
   } = useContext(AuthContext);
-
   return (
     <View style={styles.container}>
-      <View style={styles.imgContainer}>
-        <Image source={{uri: photoURL}} style={styles.img} />
-      </View>
       <View style={styles.details}>
+        <View style={styles.imgContainer}>
+          <Image source={{uri: user && user.photoURL}} style={styles.img} />
+        </View>
         <View style={styles.detailContainer}>
           <Icon
             name="account"
@@ -23,7 +22,7 @@ const index = () => {
             size={30}
             style={styles.icon}
           />
-          <Text style={styles.text}>{displayName}</Text>
+          <Text style={styles.text}>{user && user.displayName}</Text>
         </View>
         <View style={styles.detailContainer}>
           <Icon
@@ -32,9 +31,14 @@ const index = () => {
             size={30}
             style={styles.icon}
           />
-          <Text style={styles.text}>{email}</Text>
+          <Text style={styles.text}>{user && user.email}</Text>
         </View>
       </View>
+      <Button title="Desconectarse" onPress={() => {
+          logout(navigation)
+          navigation.navigate('PetsStackScreen')
+        }}
+      />
     </View>
   );
 };
@@ -42,6 +46,8 @@ const index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
+    paddingBottom: 200
   },
   imgContainer: {
     backgroundColor: '#94AFCC',
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: '35%',
     width: '100%',
+    marginBottom: 30,
   },
   img: {
     height: 120,
@@ -59,10 +66,10 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   details: {
-    paddingTop: 20
+    flex: 1
   },
   detailContainer: {
-    paddingVertical: 5,
+    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },

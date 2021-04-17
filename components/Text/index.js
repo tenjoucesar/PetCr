@@ -12,13 +12,18 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 5,
+    marginVertical: 10,
+    paddingBottom: 10,
+    borderBottomColor: "#C0C0C0",
+    borderBottomWidth: 1,
   },
   title: {
     fontSize: 18,
+    textTransform: 'capitalize'
   },
   defaultText: {
     fontSize: 15,
     color: 'grey',
+    textTransform: 'capitalize'
   },
 });

@@ -8,13 +8,14 @@ import { MainButton } from 'Components/Buttons';
 import { AuthContext } from 'Providers/AuthProvider';
 import { ChatContext } from 'Providers/ChatProvider';
 
-
-const PetDetailsScreen = ({ route, navigation }) => {
+const PetDetailsScreen = ({ route: { params: {
+  pet: {
+    name, owner, images,  gender, specie, province, yearOfBirth, description,
+  }
+} }, navigation }) => {
   const [modalVisible, setModalVisible] = useState( false );
   const { generateNewChat } = useContext( ChatContext );
   const { user } = useContext( AuthContext );
-  const petDetailsObj = route.params.params.item;
-
   const chatWithPetOwner = owner => {
     const sender = {
       name: user.displayName,
@@ -23,18 +24,6 @@ const PetDetailsScreen = ({ route, navigation }) => {
     };
     generateNewChat( owner, sender, navigation );
   };
-
-  const {
-    images,
-    name,
-    breed,
-    protective,
-    age,
-    weight,
-    gender,
-    description,
-    owner,
-  } = petDetailsObj;
 
   return (
     <ScrollView>
@@ -48,18 +37,16 @@ const PetDetailsScreen = ({ route, navigation }) => {
       <ImageList images={images} />
       <View style={styles.container}>
         <View style={styles.breedContainer}>
-          <View style={styles.breedTextContainer}>
-            <Text style={styles.breedTitle}>{name}</Text>
-            <Text>{breed}</Text>
-          </View>
-          <MainButton onPress={() => setModalVisible(true)}>
-            Lo quiero
-          </MainButton>
+        <Text style={styles.breedTitle}>{name}</Text>
+        <MainButton onPress={() => setModalVisible(true)}>
+          Lo quiero
+        </MainButton>
         </View>
-        <DetailText title="Protectora" text={protective} />
-        <DetailText title="Edad" text={age + ' Años'} style={styles.details} />
-        <DetailText title="Peso" text={weight + ' Kg'} style={styles.details} />
-        <DetailText title="Gender" text={gender} style={styles.details} />
+        <DetailText title="Protectora" text={owner.name} />
+        <DetailText title="Edad" text={(new Date().getFullYear() - yearOfBirth) + ' Años'} />
+        <DetailText title="Especie" text={specie} />
+        <DetailText title="Genero" text={gender} />
+        <DetailText title="Provincia" text={province} />
         <DetailText title="Descripcion" text={description} />
       </View>
     </ScrollView>
@@ -81,10 +68,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 15,
-  },
-  breedTextContainer: {
-    width: '50%',
   },
   breedTitle: {
     color: 'green',

@@ -1,10 +1,10 @@
-import React, {useContext, useState} from 'react';
-import {ScrollView, StyleSheet, Alert} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { ScrollView, StyleSheet, View, Alert, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
-import {AuthContext} from '../../Providers/AuthProvider';
+import { AuthContext } from 'Providers/AuthProvider';
 import {
   AppButton,
   FormPicker,
@@ -12,26 +12,19 @@ import {
   Input,
   SpeciePickerItem,
   Switch,
-} from '../../components/Form';
-import LoadingScreen from '../../Screens/LoadingScreen';
-import species from './species';
-import provinces from '../HomeScreen/DesiredLocation/provincias';
-import useForm from '../../hooks/useForm';
+  ErrorMessage
+} from 'Components/Form';
+import LoadingScreen from 'Screens/LoadingScreen';
+import provinces from 'Screens/HomeScreen/DesiredLocation/provincias';
 
-const validation = values => {
-  const errors = {};
-  const {name, specie, images, province} = values;
-  if (!name.trim()) errors.name = 'El nombre es obligatorio';
-  if (!specie) errors.specie = 'Seleccione la Especie';
-  if (!images.length) errors.images = 'Selecciona una imagen';
-  if (!province) errors.province = 'Selecciona una provincia';
-  return errors;
-};
+import species from './species';
+import useForm from '../../hooks/useForm';
+import validation from './validations';
 
 const initialState = {
   adopted: false,
   description: '',
-  gender: 'male',
+  gender: 'Macho',
   images: [],
   name: '',
   province: null,
@@ -47,14 +40,10 @@ export default function NewPetScreen({navigation}) {
     try {
       setLoading(true);
       const storeRef = [];
-      images.forEach((img, i) => {
-        storeRef.push(storage().ref(`pets/${name}${i}${Date.now()}.jpeg`));
-      });
+      images.forEach((img, i) => storeRef.push(storage().ref(`pets/${name}${i}${Date.now()}.jpeg`)));
       await Promise.all(storeRef.map((ref, i) => ref.putFile(images[i])));
-      const imgPath = await Promise.all(
-        storeRef.map(ref => ref.getDownloadURL()),
-      );
-
+      const imgPath = await Promise.all(storeRef.map(ref => ref.getDownloadURL()));
+      values.yearOfBirth = Number(values.yearOfBirth);
       const pet = {
         ...values,
         images: imgPath,
@@ -70,35 +59,32 @@ export default function NewPetScreen({navigation}) {
       navigation.navigate('PetsScreen');
       setLoading(false);
     } catch (error) {
-      Alert.alert('Error', 'Un error a ocurrido trata mas tarde', [
-        {text: 'Okay'},
-      ]);
+      Alert.alert('Error', 'Un error a ocurrido trata mas tarde', [ {text: 'Okay'}, ]);
     }
   };
 
-  const {errors, values, onChange, onSubmit} = useForm(
+  const { errors, values, onChange, onSubmit } = useForm(
     initialState,
     validation,
     savePet,
   );
 
-  const {name, description, specie, yearOfBirth, gender, images} = values;
+  const { name, description, specie, yearOfBirth, gender, images, province } = values;
 
   if (loading) return <LoadingScreen />;
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{flex: 1, backgroundColor: 'white'}}
+    >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
       <ImagePicker
         onChange={onChange}
         name="images"
         images={images}
         errorMessage={errors.images}
-      />
-      <DropDownPicker
-        items={provinces}
-        placeholder="Selecciona una provincia"
-        style={styles.dropdownContainer}
-        onChangeItem={item => onChange(item.value, 'province')}
       />
       <Input
         label="Nombre"
@@ -109,14 +95,6 @@ export default function NewPetScreen({navigation}) {
         errorMessage={errors.name}
       />
       <Input
-        label="Descripcion"
-        name="description"
-        placeholder="Ingresa la descripción"
-        onChange={onChange}
-        value={description}
-        multiline
-      />
-      <Input
         label="Año de Nacimiento"
         errorMessage={errors.yearOfBirth}
         placeholder="Ingresa la fecha de nacimiento"
@@ -124,6 +102,15 @@ export default function NewPetScreen({navigation}) {
         onChange={onChange}
         value={yearOfBirth}
         keyboardType="number-pad"
+        maxLength={4}
+      />
+      <Input
+        label="Descripcion"
+        name="description"
+        placeholder="Ingresa la descripción"
+        onChange={onChange}
+        value={description}
+        multiline
       />
       <FormPicker
         items={species}
@@ -135,15 +122,32 @@ export default function NewPetScreen({navigation}) {
         errorMessage={errors.specie}
       />
       <Switch
-        onChange={() =>
-          onChange(gender != 'male' ? 'male' : 'female', 'gender')
-        }
+        onChange={onChange}
         name="gender"
-        label={gender === 'male' ? 'Macho' : 'Hembra'}
+        label={gender}
         value={gender}
       />
-      <AppButton title="Guardar" onPress={onSubmit} />
-    </ScrollView>
+      <ScrollView>
+        <DropDownPicker
+        items={provinces}
+        placeholder="Selecciona una provincia"
+        style={styles.dropdownContainer}
+        onChangeItem={item => onChange( item.value, 'province' )}
+        value={province}
+        placeholderStyle={{
+          fontWeight: 'bold',
+          backgroundColor: '#F7F8FC',
+          height: 35,
+          paddingTop: 10,
+          paddingHorizontal: 15,
+        }}
+      />
+        <ErrorMessage error={errors.province}/>
+        <AppButton title="Guardar" onPress={onSubmit} />
+      </ScrollView>
+      </View>
+      </TouchableWithoutFeedback>
+     </KeyboardAvoidingView>
   );
 }
 
@@ -152,12 +156,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 30,
     paddingVertical: 10,
+    flex: 1,
+    justifyContent: "space-around",
   },
   dropdownContainer: {
     width: '100%',
     height: 60,
     paddingHorizontal: 0,
-    backgroundColor: 'white',
     borderWidth: 0,
+    backgroundColor: 'white',
   },
 });

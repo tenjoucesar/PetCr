@@ -9,7 +9,7 @@ import { AuthContext } from 'Providers/AuthProvider';
 
 function CustomDrawerContent({navigation, user}) {
   const [modalVisible, setModalVisible] = useState(false);
-  const {logout} = useContext(AuthContext);
+  const { logout } = useContext( AuthContext );
   const userId = user && user.uid;
 
   return (

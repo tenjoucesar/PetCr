@@ -5,6 +5,7 @@ import ErrorMessage from './ErrorMessage';
 const Input = ({label, placeholder, errorMessage, onChange, name, ...rest}) => {
   const [isFocus, setIsFocus] = useState(false);
   return (
+    <>
     <View style={styles.container}>
       <Text>{label}</Text>
       <TextInput
@@ -19,8 +20,9 @@ const Input = ({label, placeholder, errorMessage, onChange, name, ...rest}) => {
         placeholder={placeholder}
         {...rest}
       />
-      {errorMessage && <ErrorMessage error={errorMessage} />}
     </View>
+    {errorMessage && <ErrorMessage error={errorMessage} />}
+    </>
   );
 };
 
@@ -31,10 +33,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     color: 'black',
-    flex: 1,
-    marginVertical: 10,
-    paddingVertical: 10,
+    marginTop: 5,
+    paddingVertical: 5,
     paddingHorizontal: 15,
+    height: 45,
   },
 });
 

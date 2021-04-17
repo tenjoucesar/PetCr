@@ -5,47 +5,42 @@ import { PetContext } from 'Providers/PetsProvider';
 
 import PetGrid from 'Components/Grid/PetGrid';
 import Loading from 'Components/Loading';
-import Tabs from 'Components/Tabs';
-import { TAB_KEYS } from 'Components/Tabs/constants';
-
+// import Tabs from 'Components/Tabs';
+// import { TAB_KEYS } from 'Components/Tabs/constants';
 
 function PetsScreen({ navigation }) {
-  const [activeTab, setActiveTab] = useState(TAB_KEYS[0]);
+  // const [activeTab, setActiveTab] = useState(TAB_KEYS[0]);
   const { pets, loading } = useContext(PetContext);
 
-  const PetComponent = ({pet : {images, id, name, province} }) => (
+  const PetComponent = ({pet : {images, id, name, province}, pet }) => (
     <PetGrid
       img={images[0]}
       key={id}
       name={name}
       province={province}
-      onSelect={() =>
-        navigation.navigate('PetDetails', {
-          params: {item},
-        })
-      }
+      onSelect={() => navigation.navigate('PetDetails', {pet})}
     />
-  )
+  );
 
-  const renderPetItem = ({item}) => {
-    if (item.specie === activeTab.tabKey) {
-      return <PetComponent pet={item} />
-    } else if (activeTab.tabKey === 'allPets') {
-      return <PetComponent pet={item} />
-    }
-  };
+  // const renderPetItem = ({item}) => {
+  //   if (item.specie === activeTab.tabKey) {
+  //     return <PetComponent pet={item} />;
+  //   } else if (activeTab.tabKey === 'allPets') {
+  //     return <PetComponent pet={item} />;
+  //   }
+  // };
 
   return (
     <>
-      <View style={styles.tabContainer}>
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-      </View>
+      {/* <View style={styles.tabContainer}>
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab}/>÷
+      </View> */}
       {loading && <Loading />}
       <SafeAreaView>
         <FlatList
           data={pets}
-          renderItem={renderPetItem}
-          extraData={activeTab}
+          renderItem={({item}) => <PetComponent pet={item} />}
+          // extraData={activeTab}
           numColumns={3}
         />
       </SafeAreaView>
@@ -54,7 +49,6 @@ function PetsScreen({ navigation }) {
 }
 
 export default PetsScreen;
-
 
 const styles = StyleSheet.create({
   tabContainer: {

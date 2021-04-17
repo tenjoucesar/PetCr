@@ -12,7 +12,7 @@ export default function Routes() {
 
   return (
       <Drawer.Navigator
-        initialRouteName='HomeScreen'
+        initialRouteName='NewPetScreen'
         screenOptions={{}}
         drawerContent={(props) => <CustomDrawerContent user={user} {...props} />}
       >
