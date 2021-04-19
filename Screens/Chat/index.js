@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { ChatContext } from '../../Providers/ChatProvider';
-import { AuthContext } from '../../Providers/AuthProvider';
+import { ChatContext } from 'Providers/ChatProvider';
+import { AuthContext } from 'Providers/AuthProvider';
 
 export function ChatScreen({route}) {
   const { chatMessages, addNewMessage, assignNewChatToUsers } = useContext(ChatContext);

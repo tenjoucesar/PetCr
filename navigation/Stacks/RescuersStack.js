@@ -12,7 +12,7 @@ const RescuersStackScreen = ({navigation}) => (
       name='RescuersScreen'
       component={RescuersScreen}
       options={{
-        headerTitle: 'Acceso',
+        headerTitle: 'Rescatistas',
         headerLeft: () => (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item

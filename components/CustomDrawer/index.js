@@ -51,13 +51,16 @@ function CustomDrawerContent({navigation, user}) {
           onPress={() => navigation.navigate('AdoptedScreen')}
           icon={() => <Icon name="check-square-o" size={30} color="black" style={styles.icon}/>}
         />
-
         <DrawerItem
           label="Rescatistas"
           icon={() => <Icon name="home" size={30} color="black" style={styles.icon} />}
           onPress={() => navigation.navigate('RescuersScreen')}
         />
-
+        <DrawerItem
+          label="Contactenos"
+          icon={() => ( <Icon name="user-circle" size={30}  color="black" style={styles.icon} /> )}
+          onPress={() => navigation.navigate('ContactScreen')}
+        />
         {user && (
           <>
             <DrawerItem
@@ -75,11 +78,6 @@ function CustomDrawerContent({navigation, user}) {
               label="Agregar Mascota"
               icon={() => <Icon name="plus-circle" size={30} color="black" style={styles.icon} />}
               onPress={() => navigation.navigate('NewPetScreen')}
-            />
-            <DrawerItem
-              label="Contactenos"
-              icon={() => ( <Icon name="user-circle" size={30}  color="black" style={styles.icon} /> )}
-              onPress={() => navigation.navigate('ContactScreen')}
             />
             <View style={styles.divisorLine} />
             <DrawerItem
